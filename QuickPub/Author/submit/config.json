@@ -1,0 +1,42 @@
+{
+	"pages":
+	[
+		{
+			"name": "Page1",
+			"inputs":
+			[
+				{
+					"title": "Catagory",
+					"name": "catagory",
+					"type": "radio",
+					"options":
+					[
+						{
+							"name": "Paper",
+							"value": "paper"
+						},
+						{
+							"name": "Letter",
+							"value": "letter"
+						}
+					]
+				},
+				{
+					"title": "Title",
+					"name": "title",
+					"type": "text"
+				},
+				{
+					"title": "File",
+					"name": "file",
+					"type": "file",
+					"fileName": "?pages[0].inputs[0]"
+				},
+				{
+					"title": "Submit",
+					"type": "submit"
+				}
+			]
+		}
+	]
+}
