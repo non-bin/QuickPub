@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+</body>
+</html>
+
 <?php
 $myfile = fopen("config.json", "r") or die("Unable to open file!");
 $json = fread($myfile,filesize("config.json"));

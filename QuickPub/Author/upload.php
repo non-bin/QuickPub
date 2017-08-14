@@ -8,7 +8,7 @@
 	</form>
 <?php
 $target_dir = "uploads/";
-$target_file = $target_dir . basename($_POST["name"]) . pathinfo($target_file,PATHINFO_EXTENSION);
+$target_file = $target_dir . basename($_POST["name"]) . "." . pathinfo($_FILES["upload"]["name"],PATHINFO_EXTENSION);
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 // Check if image file is a actual image or fake image
