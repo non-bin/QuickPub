@@ -1,6 +1,6 @@
 {
-	"name": "cheifEditor",
-	"title": "Cheif Editor",
+	"name": "chiefEditor",
+	"title": "Chief Editor",
 	"actions":
 	{
 		"test_one":
@@ -8,14 +8,14 @@
 			"name": "test_one",
 			"title": "Test One",
 			"action": "test_one",
-			"configPath": "cheifEditor/test_one.json"
+			"configPath": "chiefEditor/test_one.json"
 		},
 		"test_two":
 		{
 			"name": "test_two",
 			"title": "Test Two",
 			"action": "test_two",
-			"configPath": "cheifEditor/test_two.json"
+			"configPath": "chiefEditor/test_two.json"
 		}
 	}
 }
