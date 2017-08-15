@@ -1,10 +1,10 @@
 {
-	"name": "author_submit_new",
-	"title": "Author Submit New",
+	"name": "test_two",
+	"title": "Test Two",
 	"pages":
 	[
 		{
-			"name": "Page One",
+			"name": "Page1",
 			"elements":
 			[
 				{
@@ -15,18 +15,12 @@
 					"maxWords": "2"
 				},
 				{
-					"title": "This is a Text Input! WOW!",
-					"name": "textInput",
-					"type": "text",
-					"id": "textInput"
-				},
-				{
 					"title": "File",
 					"name": "file",
 					"type": "file"
 				},
 				{
-					"title": "Submit",
+					"title": "next page",
 					"name": "submit",
 					"type": "submit"
 				}

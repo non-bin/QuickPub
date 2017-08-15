@@ -9,6 +9,13 @@
 			"title": "Submit New",
 			"action": "author_submit_new",
 			"configPath": "author/submit_new.json"
+		},
+		"test":
+		{
+			"name": "test",
+			"title": "Test",
+			"action": "test",
+			"configPath": "test/test.json"
 		}
 	}
 }

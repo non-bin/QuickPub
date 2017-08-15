@@ -22,61 +22,65 @@ require '../../login_manager.php';
 require '../../config_manager.php';
 require_once '../../other.php';
 
-$token = $post['token'];
-
-if (isset($post['nextRole']))
+if (intval($post['info']['nextPage']) == -1)
 {
-	$selRole = $post['nextRole'];
+	require '../submit/index.php';
 }
 else
 {
-	$selRole = "main";
-}
+	$token = $post['info']['token'];
 
-if (isset($post['nextAct']))
-{
-	$selAction = $post['nextAct'];
-}
-else
-{
-	$selAction = "main";
-}
-
-$loginInfo = login_info_token($token);
-$userInfo = user_info($loginInfo['user_id']);
-
-foreach ($userInfo['roles_arr'] as $role)
-{
-	$config[$role]['main'] = getRoleConfig($role);
-
-	foreach ($config[$role]['main']['actions'] as $action)
+	if (isset($post['info']['nextRole']))
 	{
-		$config[$role][$action['name']] = getConfig("roles/" . $config[$role]['main']['name'] . "/" . $action['name'] . ".json");
+		$selRole = $post['info']['nextRole'];
 	}
-}
+	else
+	{
+		$selRole = "main";
+	}
 
-if (isset($config[$selRole][$selAction]['title']))
-{
-	$title = $config[$selRole][$selAction]['title'];
-}
-else
-{
-	$title = $mainConfig['main']['title'];
-}
+	if (isset($post['info']['nextAct']))
+	{
+		$selAction = $post['info']['nextAct'];
+	}
+	else
+	{
+		$selAction = "main";
+	}
 
-echo $selRole . '<br>';
-echo $selAction . '<br>';
+	$loginInfo = login_info_token($token);
+	$userInfo = user_info($loginInfo['user_id']);
 
-if ($selRole == "main")
-{
-	require 'main.php';
-}
-elseif ($selAction == "main")
-{
-	require 'main.php';
-}
-else
-{
-	require 'other.php';
+	foreach ($userInfo['roles_arr'] as $role)
+	{
+		$config[$role]['main'] = getRoleConfig($role);
+
+		foreach ($config[$role]['main']['actions'] as $action)
+		{
+			$config[$role][$action['name']] = getConfig("roles/" . $config[$role]['main']['name'] . "/" . $action['name'] . ".json");
+		}
+	}
+
+	if (isset($config[$selRole][$selAction]['title']))
+	{
+		$title = $config[$selRole][$selAction]['title'];
+	}
+	else
+	{
+		$title = $mainConfig['main']['title'];
+	}
+
+	if ($selRole == "main")
+	{
+		require 'main.php';
+	}
+	elseif ($selAction == "main")
+	{
+		require 'main.php';
+	}
+	else
+	{
+		require 'other.php';
+	}
 }
 ?>

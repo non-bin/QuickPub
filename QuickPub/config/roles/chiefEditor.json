@@ -1,0 +1,21 @@
+{
+	"name": "cheifEditor",
+	"title": "Cheif Editor",
+	"actions":
+	{
+		"test_one":
+		{
+			"name": "test_one",
+			"title": "Test One",
+			"action": "test_one",
+			"configPath": "cheifEditor/test_one.json"
+		},
+		"test_two":
+		{
+			"name": "test_two",
+			"title": "Test Two",
+			"action": "test_two",
+			"configPath": "cheifEditor/test_two.json"
+		}
+	}
+}

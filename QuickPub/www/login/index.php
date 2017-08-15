@@ -64,7 +64,7 @@ if (isset($post['submit']))
 				<html>
 				<body>
 					<form action="../main/index.php" method="post">
-						<input type="hidden" name="token" value="' . $token . '">
+						<input type="hidden" name="info[token]" value="' . $token . '">
 						<div id="manual" style="display: none;">
 							if your browser dose not suport automatic redirects, click <input type="submit" value="here">
 						</div>

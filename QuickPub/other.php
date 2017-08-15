@@ -1,21 +1,19 @@
 <?php
-function dump($var, $name = '')
+function dump($var, $ret = false)
 {
 	$out = var_export($var, true);
 	$out = preg_replace('%\n%', '<br>', $out);
-	$out = preg_replace('%\s%', '&nbsp;&nbsp;', $out);
-	while (preg_match('%\\\\\\\\%', $out))
-	{
-		$out = preg_replace('%\\\\\\\\%', '/', $out);
-	}
+	$out = preg_replace('%\s\s%', ':&nbsp;&nbsp;&nbsp;', $out);
+	$out = stripslashes($out);
+	$out = $out . '<br>';
 
-	if ($name != '')
+	if ($ret)
 	{
-		echo '<b>' . $name . ':</b><br>' . $out . '<br>';
+		return $out;
 	}
 	else
 	{
-		echo $out . '<br>';
+		echo $out;
 	}
 }
 ?>

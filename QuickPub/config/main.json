@@ -17,6 +17,12 @@
 			"name": "author",
 			"code": "AU",
 			"configPath": "author.json"
+		},
+		"CE":
+		{
+			"name": "chiefEditor",
+			"code": "CE",
+			"configPath": "chiefEditor.json"
 		}
 	}
 }
