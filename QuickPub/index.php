@@ -9,6 +9,6 @@
 		<title>Page Redirection</title>
 	</head>
 	<body>
-		If you are not redirected automatically, follow the <a href='./www/login'>link to example</a>
+		If you are not redirected automatically, follow <a href='./www/login'>this link</a>
 	</body>
 </html>

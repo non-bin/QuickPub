@@ -5,7 +5,7 @@
 	},
 	"roles":
 	{
-		"default": "AU",
+		"default": "",
 		"FA":
 		{
 			"name": "fullAdmin",

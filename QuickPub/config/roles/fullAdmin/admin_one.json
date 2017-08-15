@@ -1,17 +1,12 @@
 {
-	"name": "test_one",
-	"title": "Test One",
+	"name": "admin_one",
+	"title": "Administration Page One",
 	"pages":
 	[
 		{
-			"name": "this is called a 'page'",
+			"name": "Admin Page",
 			"elements":
 			[
-				{
-					"type": "hidden",
-					"name": "title",
-					"value": "thing"
-				},
 				{
 					"title": "can you say 'page'?",
 					"name": "textOne",

@@ -2,7 +2,7 @@
 require_once 'mysql.php';
 require_once 'log.php';
 
-function saveForm($name, $ownerID, $ownerRole)
+function saveForm($name, $ownerID, $ownerRole) // saves a form to be reopened later
 {
 	global $dbc;
 
@@ -12,7 +12,7 @@ function saveForm($name, $ownerID, $ownerRole)
 	mysqli_stmt_execute($stmt);
 	$affected_rows = mysqli_stmt_affected_rows($stmt);
 
-	if ($affected_rows == 1)
+	if ($affected_rows == 1) // if it worked
 	{
 		$lastId = mysqli_insert_id($dbc);
 		$query = "SELECT * FROM unsubmited_forms where form_id = ?;";
@@ -22,12 +22,12 @@ function saveForm($name, $ownerID, $ownerRole)
 		$result = mysqli_stmt_get_result($stmt);
 		$result = mysqli_fetch_assoc($result);
 
-		return $result;
+		return $result; // return the saved form
 	}
-	else
+	else // if not
 	{
-		addLogEntry('affected rows was 0 on form creation', 'error', '0006~0');
-		return false;
+		addLogEntry('Unable to save form', 'error', '0006~0'); // throw an error
+		return false; // return false
 	}
 }
 
