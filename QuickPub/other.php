@@ -1,5 +1,5 @@
 <?php
-function dump($var, $ret = false)
+function dump($var, $print = true)
 {
 	$out = var_export($var, true);
 	$out = preg_replace('%\n%', '<br>', $out);
@@ -7,13 +7,14 @@ function dump($var, $ret = false)
 	$out = stripslashes($out);
 	$out = $out . '<br>';
 
-	if ($ret)
+	if ($print)
 	{
+		echo $out;
 		return $out;
 	}
 	else
 	{
-		echo $out;
+		return $out;
 	}
 }
 ?>

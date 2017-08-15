@@ -1,0 +1,20 @@
+0000 - no error number was given
+
+0001 - invalid logName given
+
+0002 - file error
+\0002~0 - Error while opening
+|0002~1 - Error while reading
+
+0003 - json error
+
+0004~[mysqli_errno()] - MySQL error (ends with the contents of mysqli_errno())
+\0004~0 - error connecting to database
+
+0005 - flow error
+\0005~0 - affected rows was 0
+|0005~1 - error while moving uploaded file
+
+0006 - form error
+\0006~0 - affected rows was 0
+|0006~1 - error while moving uploaded file

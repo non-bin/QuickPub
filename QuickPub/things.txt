@@ -1,0 +1,77 @@
+
+Warning: mysqli_stmt_bind_param() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\login_manager.php on line 118
+
+Warning: mysqli_stmt_execute() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\login_manager.php on line 120
+Warning: UPDATE command denied to user 'requests'@'220.239.201.97' for table 'login_info' in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\login_manager.php on line 124
+
+
+
+
+
+
+Notice: Undefined index: nextPage in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\www\main\index.php on line 25
+
+Notice: Undefined index: in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\config_manager.php on line 21
+Warning: Unable to open custom config file in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\config_manager.php on line 23
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Warning: mysqli_stmt_bind_param() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\www\signup\index.php on line 87
+
+Warning: mysqli_stmt_execute() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\www\signup\index.php on line 89
+
+Warning: mysqli_stmt_affected_rows() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\www\signup\index.php on line 93
+
+Warning: mysqli_stmt_close() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\www\signup\index.php on line 95
+An error ocured while exicuting database query oneWarning: Error while exicuting database query to login_info in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\www\signup\index.php on line 143
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Warning: mysqli_stmt_bind_param() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 8
+
+Warning: mysqli_stmt_execute() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 9
+
+Warning: mysqli_stmt_affected_rows() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 10
+Warning: affected rows was 0 on flow creation in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 26
+array (
+:   'info' => 
+:   array (
+:   :   'token' => 'xaXIqZWlDOYNB5fDX44Dd14zPWTHXD',
+:   :   'nextPage' => '-1',
+:   :   'nextRole' => 'AU',
+:   :   'nextAct' => 'submit_new',
+:   ),
+:   'user' => 
+:   array (
+:   :   'title' => 'The Heavy Penis',
+:   :   'textInput' => 'Your penis is too heavy, die in someones hole!',
+:   :   'submit' => 'Submit',
+:   ),
+)
+title: 'The Heavy Penis'
+textInput: 'Your penis is too heavy, die in someones hole!'
+
+Warning: mysqli_stmt_bind_param() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 48
+
+Warning: mysqli_stmt_execute() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 49
+
+Warning: mysqli_stmt_affected_rows() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 50
+Warning: affected rows was 0 on flow entry creation in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 91
+false
+submit: 'Submit'
+
+Warning: mysqli_stmt_bind_param() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 48
+
+Warning: mysqli_stmt_execute() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 49
+
+Warning: mysqli_stmt_affected_rows() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 50
+Warning: affected rows was 0 on flow entry creation in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 91
+false
+
+Warning: mysqli_stmt_bind_param() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 48
+
+Warning: mysqli_stmt_execute() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 49
+
+Warning: mysqli_stmt_affected_rows() expects parameter 1 to be mysqli_stmt, boolean given in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 50
+Warning: affected rows was 0 on flow entry creation in C:\Users\hazzj\Google Drive\Home\Stuff\htdocs\V.5\flow_manager.php on line 91
+false

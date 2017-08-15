@@ -1,30 +1,38 @@
 <?php
 
+require '../../log.php';
 require '../../request_manager.php';
 
-if (isset($post['submit']))
+if (isset($post['submit'])) // if a form was submited (someone has loged in)
 {
-	$data_missing = array();
+	$data_missing = array(); // make an array for the missing data
+	$data_safe = array(); // make an array for the unsafe data
 
-	if (empty($post['password']))
+	if (empty($post['password'])) // if the password is missing
 	{
-		$data_missing[] = 'Password';
+		$data_missing[] = 'password'; // add password to the array
 	}
 	else
 	{
-		$password = trim($post['password']);
+		if ($post['password'] == clean_string($post['password'])) // check if the password safe (mysql.php)
+		{
+			$data_safe[] = 'password'; // add password to the list
+		}
 	}
 
-	if (empty($post['email']))
+	if (empty($post['email'])) // if the email is missing
 	{
-		$data_missing[] = 'email';
+		$data_missing[] = 'email'; // add email to the list
 	}
 	else
 	{
-		$email = trim($post['email']);
+		if ($post['email'] == clean_string($post['email'])) // check if the email safe (mysql.php)
+		{
+			$data_safe[] = 'email'; // add email to the list
+		}
 	}
 
-	if (empty($data_missing))
+	if (empty($data_missing) & empty($data_safe))
 	{
 		require '../../mysql.php';
 		require '../../login_manager.php';
@@ -43,12 +51,12 @@ if (isset($post['submit']))
 
 		if ($extraOutput = mysqli_fetch_assoc($result))
 		{
-			echo "MySQL retrned extra values";
+			echo "<b>Warning:</b> MySQL retrned extra values<br>";
 		}
 
 		if (!mysqli_error($dbc) == "")
 		{
-			die("Error while qxecuting MySQL query");
+			die(addLogEntry("Error while excuting MySQL query", "error", "0004"));
 		}
 
 		if ($output == null)
@@ -105,10 +113,10 @@ if (isset($post['submit']))
 	<form action="./" method="post">
 
 		<p>Email</p>
-		<input type="text" name="email" required>
+		<input type="text" name="email">
 
 		<p>Password</p>
-		<input type="password" name="password" required>
+		<input type="password" name="password">
 
 		<br><br>
 		<input type="submit" name="submit" value="Login">

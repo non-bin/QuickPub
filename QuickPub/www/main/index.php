@@ -22,7 +22,16 @@ require '../../login_manager.php';
 require '../../config_manager.php';
 require_once '../../other.php';
 
-if (intval($post['info']['nextPage']) == -1)
+if (isset($post['info']['nextPage']))
+{
+	$nextPage = intval($post['info']['nextPage']);
+}
+else
+{
+	$nextPage = 
+}
+
+if ($nextPage == -1)
 {
 	require '../submit/index.php';
 }
