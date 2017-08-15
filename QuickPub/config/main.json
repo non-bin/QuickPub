@@ -1,0 +1,22 @@
+{
+	"main":
+	{
+		"title": "QuickPub"
+	},
+	"roles":
+	{
+		"default": "AU",
+		"FA":
+		{
+			"name": "fullAdmin",
+			"code": "FA",
+			"configPath": "fullAdmin.json"
+		},
+		"AU":
+		{
+			"name": "author",
+			"code": "AU",
+			"configPath": "author.json"
+		}
+	}
+}
