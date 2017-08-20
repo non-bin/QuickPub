@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. For a more 
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
-## [v0.0.7-alpha] - 2017-04-00
+## [v0.1.0-alpha] - unreleased
 ### Added
  - comments
  - added the use of includes
