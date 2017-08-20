@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
  - other.php for action completion
  - managers directory
  - flows
+ - added invalid role error handling
 
 ### Changes
  - updated database
