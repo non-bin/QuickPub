@@ -32,8 +32,16 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 	full: verbose output
 	*/
 
-	$genralLog = fopen(realpath('../../logs/general.log'), 'a'); // open the log files
-	$errorLog = fopen(realpath('../../logs/error.log'), 'a');
+	$genralLogPath = realpath('../../') . '/logs/general.log'; // save the log files paths
+	$errorLogPath = realpath('../../') . '/logs/error.log';
+
+	if (!file_exists(realpath('../../') . '/logs/'))
+	{
+		mkdir(realpath('../../') . '/logs/');
+	}
+
+	$genralLog = fopen($genralLogPath, 'a'); // open the log files
+	$errorLog = fopen($errorLogPath, 'a');
 
 	if ($logName == 'general') // if the output log is 'general'
 	{
