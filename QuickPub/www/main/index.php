@@ -63,9 +63,16 @@ else // if not
 	{
 		$config[$role]['main'] = getRoleConfig($role); // get the config for it and save it to the config variable
 
-		foreach ($config[$role]['main']['actions'] as $action) // for each of the actions the role can perform
+		if ($config[$role]['main'] != false)
 		{
-			$config[$role][$action['name']] = getConfig("roles/" . $config[$role]['main']['name'] . "/" . $action['name'] . ".json"); // get the config for it and save it to the config variable
+			foreach ($config[$role]['main']['actions'] as $action) // for each of the actions the role can perform
+			{
+				$config[$role][$action['name']] = getConfig("roles/" . $config[$role]['main']['name'] . "/" . $action['name'] . ".json"); // get the config for it and save it to the config variable
+			}
+		}
+		else
+		{
+			// an invalid role was requested
 		}
 	}
 
@@ -88,7 +95,14 @@ else // if not
 
 			foreach ($userInfo['roles_arr'] as $key => $value) // for each of the users roles
 			{
-				echo "<button type='submit' name='info[nextRole]' value='" . $value . "'>" . $config[$value]['main']['title'] . "</button>"; // add a button to select it
+				if ($config[$value]['main'] != false)
+				{
+					echo "<button type='submit' name='info[nextRole]' value='" . $value . "'>" . $config[$value]['main']['title'] . "</button>"; // add a button to select it
+				}
+				else
+				{
+					// the user has an invalid role
+				}
 			}
 			echo '</form>'; // close the form
 		}
