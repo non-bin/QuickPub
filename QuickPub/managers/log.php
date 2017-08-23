@@ -5,6 +5,12 @@ define('log_errors', 'full'); // error detail to be logged to the error log file
 
 function dump($var, $print = true) // dump the contents of a variable
 {
+	$trace = debug_backtrace();
+	$vLine = file($trace[0]['file']);
+	$fLine = $vLine[$trace[0]['line'] - 1];
+	preg_match_all("/\\$(\w+)/", $fLine, $match);
+	$varName = $match[0][0];
+
 	$out = var_export($var, true); // export the variable
 	$out = preg_replace('%\n%', '<br>', $out); // replace new lines with <br> tags
 	$out = preg_replace('%\s\s%', ':&nbsp;&nbsp;&nbsp;', $out); // replace tabs with ":   "
@@ -13,12 +19,12 @@ function dump($var, $print = true) // dump the contents of a variable
 
 	if ($print) // if the function is called to return it's value
 	{
-		echo $out; // echo it
-		return $out; // then return it
+		echo $varName . ' = ' . $out; // echo it
+		return $varName . ' = ' . $out; // then return it
 	}
 	else // if not
 	{
-		return $out; // just return it
+		return $varName . ' = ' . $out; // just return it
 	}
 }
 
