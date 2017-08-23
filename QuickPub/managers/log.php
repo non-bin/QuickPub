@@ -3,13 +3,16 @@ define('return_errors', 'none'); // error detail returned from function
 define('display_errors', 'simple'); // error detail to be echoed to the page
 define('log_errors', 'full'); // error detail to be logged to the error log file (logs/error.log)
 
-function dump($var, $print = true) // dump the contents of a variable
+function dump($var, $print = true, $label = true) // dump the contents of a variable
 {
-	$trace = debug_backtrace();
-	$vLine = file($trace[0]['file']);
-	$fLine = $vLine[$trace[0]['line'] - 1];
-	preg_match_all("/\\$(\w+)/", $fLine, $match);
-	$varName = $match[0][0];
+	if ($label)
+	{
+		$trace = debug_backtrace();
+		$vLine = file($trace[0]['file']);
+		$fLine = $vLine[$trace[0]['line'] - 1];
+		preg_match_all("/\\$(\w+)/", $fLine, $match);
+		$varName = $match[0][0];
+	}
 
 	$out = var_export($var, true); // export the variable
 	$out = preg_replace('%\n%', '<br>', $out); // replace new lines with <br> tags
@@ -17,14 +20,29 @@ function dump($var, $print = true) // dump the contents of a variable
 	$out = stripslashes($out); // strip the slashes
 	$out = $out . '<br>'; // remove backslashes
 
-	if ($print) // if the function is called to return it's value
+	if ($label)
 	{
-		echo $varName . ' = ' . $out; // echo it
-		return $varName . ' = ' . $out; // then return it
+		if ($print) // if the function is called to return it's value
+		{
+			echo $varName . ' = ' . $out; // echo it
+			return $varName . ' = ' . $out; // then return it
+		}
+		else // if not
+		{
+			return $varName . ' = ' . $out; // just return it
+		}
 	}
-	else // if not
+	else
 	{
-		return $varName . ' = ' . $out; // just return it
+		if ($print) // if the function is called to return it's value
+		{
+			echo $out; // echo it
+			return $out; // then return it
+		}
+		else // if not
+		{
+			return $out; // just return it
+		}
 	}
 }
 
