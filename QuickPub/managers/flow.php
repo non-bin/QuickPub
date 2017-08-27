@@ -56,6 +56,9 @@ function addFlowEntry($flow_id, $content, $owner_id, $created_by_role) // add an
 	mysqli_stmt_execute($stmt);
 	$affected_rows = mysqli_stmt_affected_rows($stmt);
 
+	dump($affected_rows);
+	echo "-------------------------<br>";
+
 	if ($affected_rows == 1) // if it worked
 	{
 		$lastId = mysqli_insert_id($dbc); // save the flow entry id
