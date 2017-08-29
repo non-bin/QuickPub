@@ -7,7 +7,7 @@ function saveForm($name, $ownerID, $ownerRole) // saves a form to be reopened la
 	global $dbc;
 
 	$query = "INSERT INTO unsubmited_forms (name, owner_id, created_by_role) VALUES (?, ?, ?);";
-	$stmt = mysqli_prepare($dbc, $query);
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "sis", $name, $ownerID, $ownerRole);
 	mysqli_stmt_execute($stmt);
 	$affected_rows = mysqli_stmt_affected_rows($stmt);
@@ -15,8 +15,8 @@ function saveForm($name, $ownerID, $ownerRole) // saves a form to be reopened la
 	if ($affected_rows == 1) // if it worked
 	{
 		$lastId = mysqli_insert_id($dbc);
-		$query = "SELECT * FROM unsubmited_forms where form_id = ?;";
-		$stmt = mysqli_prepare($dbc, $query);
+		$query  = "SELECT * FROM unsubmited_forms where form_id = ?;";
+		$stmt   = mysqli_prepare($dbc, $query);
 		mysqli_stmt_bind_param($stmt, "s", $lastId);
 		mysqli_stmt_execute($stmt);
 		$result = mysqli_stmt_get_result($stmt);
@@ -47,7 +47,7 @@ function saveFormEntry($formID, $content)
 	$contentJSON = json_encode($content);
 
 	$query = "INSERT INTO form_entrys (form_id, content) VALUES (?, ?);";
-	$stmt = mysqli_prepare($dbc, $query);
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "is", $formID, $contentJSON);
 	mysqli_stmt_execute($stmt);
 	$affected_rows = mysqli_stmt_affected_rows($stmt);
@@ -55,12 +55,12 @@ function saveFormEntry($formID, $content)
 	if ($affected_rows == 1)
 	{
 		$lastId = mysqli_insert_id($dbc);
-		$query = "SELECT * FROM form_entrys where entry_id = ?;";
-		$stmt = mysqli_prepare($dbc, $query);
+		$query  = "SELECT * FROM form_entrys where entry_id = ?;";
+		$stmt   = mysqli_prepare($dbc, $query);
 		mysqli_stmt_bind_param($stmt, "i", $lastId);
 		mysqli_stmt_execute($stmt);
 		$result = mysqli_stmt_get_result($stmt);
-		$entry = mysqli_fetch_assoc($result);
+		$entry  = mysqli_fetch_assoc($result);
 
 		$flow = viewForm($formID);
 
@@ -103,13 +103,13 @@ function viewFormEntrys($id)
 	$count = 0;
 
 	$query = "SELECT * FROM form_entrys where form_id = ?;";
-	$stmt = mysqli_prepare($dbc, $query);
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "i", $id);
 	mysqli_stmt_execute($stmt);
 	$result = mysqli_stmt_get_result($stmt);
-	while($row = mysqli_fetch_assoc($result))
+	while ($row = mysqli_fetch_assoc($result))
 	{
-		$count = $count + 1;
+		$count       = $count + 1;
 		$out[$count] = $row;
 	}
 
@@ -121,7 +121,7 @@ function viewForm($id)
 	global $dbc;
 
 	$query = "SELECT * FROM unsubmited_forms where form_id = ?;";
-	$stmt = mysqli_prepare($dbc, $query);
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "i", $id);
 	mysqli_stmt_execute($stmt);
 	$out = mysqli_stmt_get_result($stmt);
