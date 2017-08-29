@@ -8,15 +8,10 @@ function user_exists($email) // check if a user exists ('if (!login_info() == fa
 	global $dbc;
 
 	$query = "SELECT primary_email FROM login_info WHERE primary_email = ?;";
-
-	$stmt = mysqli_prepare($dbc, $query);
-
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "s", $email);
-
 	mysqli_stmt_execute($stmt);
-
 	$result = mysqli_stmt_get_result($stmt);
-
 	$result = mysqli_fetch_assoc($result);
 
 	if ($result['primary_email'] == $email) // if the request did not fail
@@ -46,15 +41,10 @@ function login_info($email, $password) // get the login info for a user (a passw
 	global $dbc;
 
 	$query = "SELECT * FROM login_info WHERE primary_email = ?;";
-
-	$stmt = mysqli_prepare($dbc, $query);
-
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "s", $email);
-
 	mysqli_stmt_execute($stmt);
-
 	$result = mysqli_stmt_get_result($stmt);
-
 	$return = mysqli_fetch_assoc($result);
 
 	if ($extraOutput = mysqli_fetch_assoc($result)) // if extra values were received
@@ -82,15 +72,10 @@ function login_info_token($token) // same as login_info except using a token ins
 	global $dbc;
 
 	$query = "SELECT * FROM login_info WHERE token = ?;";
-
-	$stmt = mysqli_prepare($dbc, $query);
-
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "s", $token);
-
 	mysqli_stmt_execute($stmt);
-
 	$result = mysqli_stmt_get_result($stmt);
-
 	$return = mysqli_fetch_assoc($result);
 
 	return $return;
@@ -101,17 +86,11 @@ function user_info($id) // get the user info for a user from the user id (this i
 	global $dbc;
 
 	$query = "SELECT * FROM user_info WHERE user_id = ?;";
-
-	$stmt = mysqli_prepare($dbc, $query);
-
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "s", $id);
-
 	mysqli_stmt_execute($stmt);
-
-	$result = mysqli_stmt_get_result($stmt);
-
-	$return = mysqli_fetch_assoc($result);
-
+	$result              = mysqli_stmt_get_result($stmt);
+	$return              = mysqli_fetch_assoc($result);
 	$return['roles_arr'] = explode(", ", $return['roles']);
 
 	return $return;
@@ -130,11 +109,8 @@ function create_token($user_id = -1) // create a user token
 		global $dbc;
 
 		$query = "UPDATE login_info SET token = ? WHERE user_id = ?;";
-
-		$stmt = mysqli_prepare($dbc, $query);
-
+		$stmt  = mysqli_prepare($dbc, $query);
 		mysqli_stmt_bind_param($stmt, "si", $token, $user_id);
-
 		mysqli_stmt_execute($stmt); // apply it to the user
 
 		if (!mysqli_errno($dbc) == 0) // if there's an error
@@ -148,9 +124,10 @@ function create_token($user_id = -1) // create a user token
 
 function RandString($length) // create a random string from the charset
 {
-	$charset = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$charset      = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$randomString = '';
-	for ($i = 0; $i < $length; $i++) {
+	for ($i = 0; $i < $length; $i++)
+	{
 		$randomString = $randomString . $charset[rand(0, strlen($charset) - 1)];
 	}
 	return $randomString;

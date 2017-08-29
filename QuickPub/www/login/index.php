@@ -1,12 +1,11 @@
 <?php
-
 require_once '../../managers/log.php';
 require_once '../../managers/requests.php';
 
 if ($post & isset($post['submit'])) // if post was used and a form was submitted (someone has logged in)
 {
 	$data_missing = array(); // make an array for the missing data
-	$data_unsafe = array(); // make an array for the unsafe data
+	$data_unsafe  = array(); // make an array for the unsafe data
 
 	if (empty($post['password'])) // if the password is missing
 	{

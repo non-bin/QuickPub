@@ -54,10 +54,10 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 	simple: simple error report in the format 'Quickpub Warning: <description> in <file> on line <line>'
 	simplehtml: return only, html format simple error report in the format 'Quickpub Warning: <description> in <file> on line <line>'
 	full: verbose output
-	*/
+	 */
 
 	$genralLogPath = realpath('../../') . '/logs/general.log'; // save the log files paths
-	$errorLogPath = realpath('../../') . '/logs/error.log';
+	$errorLogPath  = realpath('../../') . '/logs/error.log';
 
 	if (!file_exists(realpath('../../') . '/logs/'))
 	{
@@ -65,7 +65,7 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 	}
 
 	$genralLog = fopen($genralLogPath, 'a'); // open the log files
-	$errorLog = fopen($errorLogPath, 'a');
+	$errorLog  = fopen($errorLogPath, 'a');
 
 	if ($logName == 'general') // if the output log is 'general'
 	{
@@ -88,7 +88,7 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 
 		}
 
-		$logString = "//----------------------------------------------\n\n" . date("d/m/y H:i.s - ") . $errorNo . "\n\n" . $description . "\nError called in file: " . preg_replace("/\\\\/", "/", $debugInfo['0']['file']) . " on line: " . $debugInfo['0']['line'] . "\nUseful Information:\n\ndebugInfo:\n" . stripslashes(var_export($debugInfo, true))  . "\n\n_SERVER:\n" . stripslashes(var_export($_SERVER, true)) . "\n\n\n"; // create the verbose output
+		$logString = "//----------------------------------------------\n\n" . date("d/m/y H:i.s - ") . $errorNo . "\n\n" . $description . "\nError called in file: " . preg_replace("/\\\\/", "/", $debugInfo['0']['file']) . " on line: " . $debugInfo['0']['line'] . "\nUseful Information:\n\ndebugInfo:\n" . stripslashes(var_export($debugInfo, true)) . "\n\n_SERVER:\n" . stripslashes(var_export($_SERVER, true)) . "\n\n\n"; // create the verbose output
 
 		// these two lines can be added to:
 
@@ -97,7 +97,6 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 
 		// Redirect on error
 		// echo "<script>window.location.href = 'http://' + window.location.hostname + '/V.3/www/error.php?errno=" . $errorNo . "';</script>";
-
 
 		if (log_errors == 'full') // verbose output
 		{

@@ -5,7 +5,7 @@ dump($post);
 dump($_FILES);
 
 $loginInfo = login_info_token($post['info']['token']); // get the login
-$userInfo = user_info($loginInfo['user_id']); // and user info for the user
+$userInfo  = user_info($loginInfo['user_id']); // and user info for the user
 
 $flows[$post['user']['title']] = addFlow($post['user']['title'], $loginInfo['user_id'], $post['info']['nextRole']); // add a flow with the given name
 
