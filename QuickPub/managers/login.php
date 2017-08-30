@@ -96,11 +96,11 @@ function user_info($id) // get the user info for a user from the user id (this i
 	return $return;
 }
 
-function create_token($user_id = -1) // create a user token
+function create_token($userId = -1) // create a user token
 {
 	$token = RandString(30); // generate the token with length 30
 
-	if ($user_id == -1) // if no user id is given
+	if ($userId == -1) // if no user id is given
 	{
 		return $token; // return the token
 	}
@@ -110,7 +110,7 @@ function create_token($user_id = -1) // create a user token
 
 		$query = "UPDATE login_info SET token = ? WHERE user_id = ?;";
 		$stmt  = mysqli_prepare($dbc, $query);
-		mysqli_stmt_bind_param($stmt, "si", $token, $user_id);
+		mysqli_stmt_bind_param($stmt, "si", $token, $userId);
 		mysqli_stmt_execute($stmt); // apply it to the user
 
 		if (!mysqli_errno($dbc) == 0) // if there's an error
@@ -133,13 +133,13 @@ function RandString($length) // create a random string from the charset
 	return $randomString;
 }
 
-function createhash($given_password) // create a password hash
+function createhash($givenPassword) // create a password hash
 {
-	return password_hash($given_password, PASSWORD_DEFAULT, ['cost' => 12]);
+	return password_hash($givenPassword, PASSWORD_DEFAULT, ['cost' => 12]);
 }
 
-function verifyPassword($given_password, $hash) // check a password against a hash
+function verifyPassword($givenPassword, $hash) // check a password against a hash
 {
-	return password_verify($given_password, $hash);
+	return password_verify($givenPassword, $hash);
 }
 ?>
