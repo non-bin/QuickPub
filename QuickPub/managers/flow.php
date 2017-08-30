@@ -1,11 +1,11 @@
 <?php
-function addFlow($name, $owner_id, $role) // create a flow
+function addFlow($name, $ownerId, $role) // create a flow
 {
 	global $dbc;
 
 	$query = "INSERT INTO flows (name, owner_id, created_by_role) VALUES (?, ?, ?);"; // create the flow
 	$stmt  = mysqli_prepare($dbc, $query);
-	mysqli_stmt_bind_param($stmt, "sis", $name, $owner_id, $role);
+	mysqli_stmt_bind_param($stmt, "sis", $name, $ownerId, $role);
 	mysqli_stmt_execute($stmt);
 	$affected_rows = mysqli_stmt_affected_rows($stmt);
 
@@ -28,7 +28,7 @@ function addFlow($name, $owner_id, $role) // create a flow
 	}
 }
 
-function addFlowEntry($flow_id, $content, $owner_id, $created_by_role) // add an entry to a flow
+function addFlowEntry($flowId, $content, $ownerId, $createdByRole) // add an entry to a flow
 {
 	global $dbc;
 
@@ -45,7 +45,7 @@ function addFlowEntry($flow_id, $content, $owner_id, $created_by_role) // add an
 
 	$query = "INSERT INTO flow_entrys (flow_id, content, owner_id, created_by_role) VALUES (?, ?, ?, ?);"; // add the entry
 	$stmt  = mysqli_prepare($dbc, $query);
-	mysqli_stmt_bind_param($stmt, "isis", $flow_id, $contentJSON, $owner_id, $created_by_role);
+	mysqli_stmt_bind_param($stmt, "isis", $flowId, $contentJSON, $ownerId, $createdByRole);
 	mysqli_stmt_execute($stmt);
 	$affected_rows = mysqli_stmt_affected_rows($stmt);
 
@@ -62,7 +62,7 @@ function addFlowEntry($flow_id, $content, $owner_id, $created_by_role) // add an
 		$result = mysqli_stmt_get_result($stmt);
 		$entry  = mysqli_fetch_assoc($result); // save the entry info
 
-		$flow = viewFlow($flow_id); // save the full flow info
+		$flow = viewFlow($flowId); // save the full flow info
 
 		if (isset($content['file'])) // if there's a file
 		{

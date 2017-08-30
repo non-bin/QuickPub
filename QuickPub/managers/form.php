@@ -10,9 +10,9 @@ function saveForm($name, $ownerID, $ownerRole) // saves a form to be reopened la
 	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "sis", $name, $ownerID, $ownerRole);
 	mysqli_stmt_execute($stmt);
-	$affected_rows = mysqli_stmt_affected_rows($stmt);
+	$affectedRows = mysqli_stmt_affected_rows($stmt);
 
-	if ($affected_rows == 1) // if it worked
+	if ($affectedRows == 1) // if it worked
 	{
 		$lastId = mysqli_insert_id($dbc);
 		$query  = "SELECT * FROM unsubmited_forms where form_id = ?;";
@@ -50,9 +50,9 @@ function saveFormEntry($formID, $content)
 	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "is", $formID, $contentJSON);
 	mysqli_stmt_execute($stmt);
-	$affected_rows = mysqli_stmt_affected_rows($stmt);
+	$affectedRows = mysqli_stmt_affected_rows($stmt);
 
-	if ($affected_rows == 1)
+	if ($affectedRows == 1)
 	{
 		$lastId = mysqli_insert_id($dbc);
 		$query  = "SELECT * FROM form_entrys where entry_id = ?;";
@@ -73,8 +73,8 @@ function saveFormEntry($formID, $content)
 				mkdir($dir);
 			}
 
-			$target_file = $dir . '/' . $lastId;
-			if (move_uploaded_file($content['file']["tmp_name"], $target_file))
+			$targetFile = $dir . '/' . $lastId;
+			if (move_uploaded_file($content['file']["tmp_name"], $targetFile))
 			{
 				return $entry;
 			}
