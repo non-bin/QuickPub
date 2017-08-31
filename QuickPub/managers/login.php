@@ -52,7 +52,7 @@ function login_info($email, $password) // get the login info for a user (a passw
 		echo addLogEntry('Extra values were received', 'error', '0004~1'); // throw an error
 	}
 
-	if (!mysqli_error($dbc) == "") // if there is an error
+	if (mysqli_error($dbc) != "") // if there is an error
 	{
 		die(addLogEntry("Error while executing MySQL query", "error", "0004")); // throw an error
 	}
