@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") // if the page was requested with POST
 {
-	$post = array(); // create the post variable
+	$post = []; // create the post variable
 
 	if (isset($_POST['info'])) // if there is an info section in the post request
 	{
