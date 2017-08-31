@@ -5,6 +5,7 @@
 </head>
 <body>
 	<?php
+	require '../../managers/dataValidation.php';
 	require '../../managers/requests.php';
 	if ($post) // if post was used
 	{

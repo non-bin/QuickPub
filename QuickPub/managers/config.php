@@ -1,4 +1,5 @@
 <?php
+require_once 'dataValidation.php';
 require_once 'log.php';
 
 $mainConfigFilePath = realpath("../../config/main.json");                                                                                            // get the path to the config file
