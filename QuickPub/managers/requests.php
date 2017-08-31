@@ -41,14 +41,4 @@ else // if not
 	$post = false; // set post to false
 }
 
-function clean_string($string)
-{
-	/* for the moment I have disabled these, later I will put in more security measures
-	preg_replace('%([^A-Za-z0-9\s])%', '', $String); // strip all characters except these
-	$string = trim($string);
-	$string = stripslashes($string);
-	$string = htmlspecialchars($string);
-	 */
-	return $string;
-}
 ?>
