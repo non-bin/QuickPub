@@ -24,3 +24,4 @@
 
 0007 - config error
 \0007~0 - file dose not exist
+|0007~1 - invalid role config requested

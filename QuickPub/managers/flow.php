@@ -1,24 +1,19 @@
 <?php
-
-/*
-a flow is the flow of where the a document goes an who has access to it
-*/
-
-function addFlow($name, $owner_id, $role) // create a flow
+function addFlow($name, $ownerId, $role) // create a flow
 {
 	global $dbc;
 
 	$query = "INSERT INTO flows (name, owner_id, created_by_role) VALUES (?, ?, ?);"; // create the flow
-	$stmt = mysqli_prepare($dbc, $query);
-	mysqli_stmt_bind_param($stmt, "sis", $name, $owner_id, $role);
+	$stmt  = mysqli_prepare($dbc, $query);
+	mysqli_stmt_bind_param($stmt, "sis", $name, $ownerId, $role);
 	mysqli_stmt_execute($stmt);
 	$affected_rows = mysqli_stmt_affected_rows($stmt);
 
 	if ($affected_rows == 1) // if it was created successfully
 	{
 		$lastId = mysqli_insert_id($dbc); // save the flow id
-		$query = "SELECT * FROM flows where flow_id = ?;";
-		$stmt = mysqli_prepare($dbc, $query);
+		$query  = "SELECT * FROM flows where flow_id = ?;";
+		$stmt   = mysqli_prepare($dbc, $query);
 		mysqli_stmt_bind_param($stmt, "s", $lastId);
 		mysqli_stmt_execute($stmt); // save the flow info
 		$result = mysqli_stmt_get_result($stmt);
@@ -33,7 +28,7 @@ function addFlow($name, $owner_id, $role) // create a flow
 	}
 }
 
-function addFlowEntry($flow_id, $content, $owner_id, $created_by_role) // add an entry to a flow
+function addFlowEntry($flowId, $content, $ownerId, $createdByRole) // add an entry to a flow
 {
 	global $dbc;
 
@@ -48,25 +43,25 @@ function addFlowEntry($flow_id, $content, $owner_id, $created_by_role) // add an
 
 	$contentJSON = json_encode($content); // encode the entry content to json
 
-
-
 	$query = "INSERT INTO flow_entrys (flow_id, content, owner_id, created_by_role) VALUES (?, ?, ?, ?);"; // add the entry
-	$stmt = mysqli_prepare($dbc, $query);
-	mysqli_stmt_bind_param($stmt, "isis", $flow_id, $contentJSON, $owner_id, $created_by_role);
+	$stmt  = mysqli_prepare($dbc, $query);
+	mysqli_stmt_bind_param($stmt, "isis", $flowId, $contentJSON, $ownerId, $createdByRole);
 	mysqli_stmt_execute($stmt);
 	$affected_rows = mysqli_stmt_affected_rows($stmt);
+
+	// dump(mysqli_error($dbc));
 
 	if ($affected_rows == 1) // if it worked
 	{
 		$lastId = mysqli_insert_id($dbc); // save the flow entry id
-		$query = "SELECT * FROM flow_entrys where entry_id = ?;";
-		$stmt = mysqli_prepare($dbc, $query);
+		$query  = "SELECT * FROM flow_entrys where entry_id = ?;";
+		$stmt   = mysqli_prepare($dbc, $query);
 		mysqli_stmt_bind_param($stmt, "i", $lastId);
 		mysqli_stmt_execute($stmt);
 		$result = mysqli_stmt_get_result($stmt);
-		$entry = mysqli_fetch_assoc($result); // save the entry info
+		$entry  = mysqli_fetch_assoc($result); // save the entry info
 
-		$flow = viewFlow($flow_id); // save the full flow info
+		$flow = viewFlow($flowId); // save the full flow info
 
 		if (isset($content['file'])) // if there's a file
 		{
@@ -96,7 +91,7 @@ function addFlowEntry($flow_id, $content, $owner_id, $created_by_role) // add an
 	}
 	else // if the entry creation failed
 	{
-		addLogEntry('affected rows was 0 on flow entry creation', 'error', '0005~0'); // throw an error
+		addLogEntry('affected rows was ' . $affected_rows . ', should be 1 on flow entry creation', 'error', '0005~0'); // throw an error
 		return false; // return false
 	}
 }
@@ -106,7 +101,7 @@ function viewFlow($id) // view the info for a flow
 	global $dbc;
 
 	$query = "SELECT * FROM flows where flow_id = ?;";
-	$stmt = mysqli_prepare($dbc, $query);
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "i", $id);
 	mysqli_stmt_execute($stmt);
 	$out = mysqli_stmt_get_result($stmt); // get the flow info
@@ -122,15 +117,15 @@ function viewFlowEntrys($id) // view the info for a flow entry
 	$count = 0;
 
 	$query = "SELECT * FROM flow_entrys where flow_id = ?;";
-	$stmt = mysqli_prepare($dbc, $query);
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "i", $id);
 	mysqli_stmt_execute($stmt);
 	$result = mysqli_stmt_get_result($stmt); // get the flow entry info
 	$result = mysqli_fetch_assoc($result);
 
-	while($row = $result) // don't know what this is
+	while ($row = $result) // don't know what this is
 	{
-		$count = $count + 1;
+		$count       = $count + 1;
 		$out[$count] = $row;
 	}
 
@@ -142,7 +137,7 @@ function viewFlowBy($owner) // view a flow by an array of identifiers
 	global $dbc;
 
 	$query = "SELECT * FROM flow_entrys WHERE `flow_id` = 17 AND entry_id = 32;";
-	$stmt = mysqli_prepare($dbc, $query);
+	$stmt  = mysqli_prepare($dbc, $query);
 	mysqli_stmt_bind_param($stmt, "i", $id);
 	mysqli_stmt_execute($stmt);
 	$result = mysqli_stmt_get_result($stmt); // get the flow entry info

@@ -1,6 +1,6 @@
 # QuickPub v0.1.0-alpha
 
-## Notes
+## Notes THIS FILE IS NOT UP TO DATE!
 
 File uploading and probably lots of other things do not work in this version
 

@@ -1,3 +1,4 @@
 desktop.ini
-QuickPub/flows/*
-QuickPub/logs/*
+QuickPub/flows/
+QuickPub/logs/
+reset.cmd

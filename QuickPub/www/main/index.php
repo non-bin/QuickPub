@@ -16,7 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') // if the page was not requested with 
 	'); // send the user to www/index.php (default redirect page)
 }
 
-require_once '../../managers/log.php';
+require '../../managers/log.php';
+require '../../managers/wordpressCodeX.php';
+require '../../managers/dataValidation.php';
 require_once '../../managers/requests.php';
 require_once '../../managers/login.php';
 require_once '../../managers/config.php';
@@ -57,15 +59,22 @@ else // if not
 	}
 
 	$loginInfo = login_info_token($token); // get the login info for the user from the token
-	$userInfo = user_info($loginInfo['user_id']); // get the user info from the user id from the login info
+	$userInfo  = user_info($loginInfo['user_id']); // get the user info from the user id from the login info
 
 	foreach ($userInfo['roles_arr'] as $role) // for each of the roles the user has
 	{
 		$config[$role]['main'] = getRoleConfig($role); // get the config for it and save it to the config variable
 
-		foreach ($config[$role]['main']['actions'] as $action) // for each of the actions the role can perform
+		if ($config[$role]['main'] != false)
 		{
-			$config[$role][$action['name']] = getConfig("roles/" . $config[$role]['main']['name'] . "/" . $action['name'] . ".json"); // get the config for it and save it to the config variable
+			foreach ($config[$role]['main']['actions'] as $action) // for each of the actions the role can perform
+			{
+				$config[$role][$action['name']] = getConfig("roles/" . $config[$role]['main']['name'] . "/" . $action['name'] . ".json"); // get the config for it and save it to the config variable
+			}
+		}
+		else
+		{
+			// an invalid role was requested
 		}
 	}
 
@@ -88,7 +97,14 @@ else // if not
 
 			foreach ($userInfo['roles_arr'] as $key => $value) // for each of the users roles
 			{
-				echo "<button type='submit' name='info[nextRole]' value='" . $value . "'>" . $config[$value]['main']['title'] . "</button>"; // add a button to select it
+				if ($config[$value]['main'] != false)
+				{
+					echo "<button type='submit' name='info[nextRole]' value='" . $value . "'>" . $config[$value]['main']['title'] . "</button>"; // add a button to select it
+				}
+				else
+				{
+					// the user has an invalid role
+				}
 			}
 			echo '</form>'; // close the form
 		}
@@ -117,15 +133,15 @@ else // if not
 
 		if ($pageNo < count($config[$selRole][$selAction]['pages']) - 1) // if the user is before the second last page of an action
 		{
-			$action = "./index.php"; // set the action to this page
-			$nextPage = $pageNo + 1; // set the next page to be requested
+			$action    = "./index.php"; // set the action to this page
+			$nextPage  = $pageNo + 1; // set the next page to be requested
 			$extraHTML = '<input type="hidden" name="info[nextPage]" value="' . $nextPage . '">'; // add the next page value to the form
 		}
 		else // if the user is on the last page
 		{
 			if ($pageNo < count($config[$selRole][$selAction]['pages'])) // if the user is on the second last page
 			{
-				$action = "./index.php"; // set the action to this page
+				$action    = "./index.php"; // set the action to this page
 				$extraHTML = '<input type="hidden" name="info[nextPage]" value="-1">'; // add the next page value (-1 (last page)) to the form
 			}
 			else // if the user is on the last page
@@ -136,14 +152,14 @@ else // if not
 
 		echo '<!DOCTYPE html><html><head></head><body onload="checkWordCount()"><form action="' . $action . '" method="post" enctype="multipart/form-data"><input type="hidden" name="info[token]" value="' . $token . '">' . $extraHTML . '<h1>' . $config[$selRole][$selAction]['title'] . '</h1><h2>' . $config[$selRole][$selAction]['pages'][$pageNo]['name'] . "</h2>"; // create the form and set the action, add the token, insert the extra html, insert the action title, then insert page name
 
-		for ($j=0; $j < count($config[$selRole][$selAction]['pages'][$pageNo]['elements']); $j++) // repeat for each element in the page
+		for ($j = 0; $j < count($config[$selRole][$selAction]['pages'][$pageNo]['elements']); $j++) // repeat for each element in the page
 		{
 			$currentElement = $config[$selRole][$selAction]['pages'][$pageNo]['elements'][$j]; // save the configuration for the current element
 
 			if ($currentElement['type'] == "radio") // if the current element is a radio button
 			{
 				echo '<h4>' . $currentElement['title'] . '</h4>'; // insert the title
-				for ($k=0; $k < count($currentElement['options']); $k++) // repeat for each option
+				for ($k = 0; $k < count($currentElement['options']); $k++) // repeat for each option
 				{
 					echo '<input type="radio" name="user[' . $currentElement['name'] . ']'; // create an option and set the name
 					echo '" value="' . $currentElement['options'][$k]['value']; // set the value

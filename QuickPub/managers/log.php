@@ -3,22 +3,43 @@ define('return_errors', 'none'); // error detail returned from function
 define('display_errors', 'simple'); // error detail to be echoed to the page
 define('log_errors', 'full'); // error detail to be logged to the error log file (logs/error.log)
 
-function dump($var, $print = true) // dump the contents of a variable
+function dump($var, $print = true, $label = true) // dump the contents of a variable
 {
-	$out = var_export($var, true); // export the variable
-	$out = preg_replace('%\n%', '<br>', $out); // replace new lines with <br> tags
-	$out = preg_replace('%\s\s%', ':&nbsp;&nbsp;&nbsp;', $out); // replace tabs with ":   "
-	$out = stripslashes($out); // strip the slashes
-	$out = $out . '<br>'; // remove backslashes
-
-	if ($print) // if the function is called to return it's value
+	if ($label)
 	{
-		echo $out; // echo it
-		return $out; // then return it
+		$trace = debug_backtrace();
+		$vLine = file($trace[0]['file']);
+		$fLine = $vLine[$trace[0]['line'] - 1];
+		preg_match_all("/\\$(\w+)/", $fLine, $match);
+		$varName = $match[0][0];
 	}
-	else // if not
+
+	$out = var_export($var, true); // export the variable
+	$out = $out .'<br>';
+
+	if ($label)
 	{
-		return $out; // just return it
+		if ($print) // if the function is called to return it's value
+		{
+			echo '<pre>' . $varName . ' = ' . $out . '</pre>'; // echo it
+			return '<pre>' . $varName . ' = ' . $out . '</pre>'; // then return it
+		}
+		else // if not
+		{
+			return '<pre>' . $varName . ' = ' . $out . '</pre>'; // just return it
+		}
+	}
+	else
+	{
+		if ($print) // if the function is called to return it's value
+		{
+			echo '<pre>' . $out . '</pre>'; // echo it
+			return '<pre>' . $out . '</pre>'; // then return it
+		}
+		else // if not
+		{
+			return '<pre>' . $out . '</pre>'; // just return it
+		}
 	}
 }
 
@@ -30,10 +51,18 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 	simple: simple error report in the format 'Quickpub Warning: <description> in <file> on line <line>'
 	simplehtml: return only, html format simple error report in the format 'Quickpub Warning: <description> in <file> on line <line>'
 	full: verbose output
-	*/
+	 */
 
-	$genralLog = fopen(realpath('../../logs/general.log'), 'a'); // open the log files
-	$errorLog = fopen(realpath('../../logs/error.log'), 'a');
+	$genralLogPath = realpath('../../') . '/logs/general.log'; // save the log files paths
+	$errorLogPath  = realpath('../../') . '/logs/error.log';
+
+	if (!file_exists(realpath('../../') . '/logs/'))
+	{
+		mkdir(realpath('../../') . '/logs/');
+	}
+
+	$genralLog = fopen($genralLogPath, 'a'); // open the log files
+	$errorLog  = fopen($errorLogPath, 'a');
 
 	if ($logName == 'general') // if the output log is 'general'
 	{
@@ -56,7 +85,7 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 
 		}
 
-		$logString = "//----------------------------------------------\n\n" . date("d/m/y H:i.s - ") . $errorNo . "\n\n" . $description . "\nError called in file: " . preg_replace("/\\\\/", "/", $debugInfo['0']['file']) . " on line: " . $debugInfo['0']['line'] . "\nUseful Information:\n\ndebugInfo:\n" . stripslashes(var_export($debugInfo, true))  . "\n\n_SERVER:\n" . stripslashes(var_export($_SERVER, true)) . "\n\n\n"; // create the verbose output
+		$logString = "//----------------------------------------------\n\n" . date("d/m/y H:i.s - ") . $errorNo . "\n\n" . $description . "\nError called in file: " . preg_replace("/\\\\/", "/", $debugInfo['0']['file']) . " on line: " . $debugInfo['0']['line'] . "\nUseful Information:\n\ndebugInfo:\n" . stripslashes(var_export($debugInfo, true)) . "\n\n_SERVER:\n" . stripslashes(var_export($_SERVER, true)) . "\n\n\n"; // create the verbose output
 
 		// these two lines can be added to:
 
@@ -65,7 +94,6 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 
 		// Redirect on error
 		// echo "<script>window.location.href = 'http://' + window.location.hostname + '/V.3/www/error.php?errno=" . $errorNo . "';</script>";
-
 
 		if (log_errors == 'full') // verbose output
 		{

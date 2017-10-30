@@ -5,6 +5,10 @@
 </head>
 <body>
 	<?php
+
+	require_once '../../managers/log.php';
+	require '../../managers/wordpressCodeX.php';
+	require '../../managers/dataValidation.php';
 	require '../../managers/requests.php';
 	if ($post) // if post was used
 	{
@@ -71,40 +75,25 @@
 			require_once '../../managers/mysql.php';
 			require_once '../../managers/login.php';
 			require_once '../../managers/config.php';
-			require_once '../../managers/log.php';
 
-			$hash = createHash($password); // hash the given password
-
+			$hash  = createHash($password); // hash the given password
 			$query = "INSERT INTO login_info (primary_email, password, date_added, token) VALUES (?, ?, ?, ?)";
-
-			$date = date("d/m/y H:i.s"); // get the date and time
-
-			$stmt = mysqli_prepare($dbc, $query);
-
+			$date  = date("d/m/y H:i.s"); // get the date and time
+			$stmt  = mysqli_prepare($dbc, $query);
 			$token = create_token(); // create a token
-
 			mysqli_stmt_bind_param($stmt, "ssss", $primary_email, $hash, $date, $token);
-
 			mysqli_stmt_execute($stmt); // create the account
-
-			login_info_token($token); // get the login info from the token
-
+			login_info_token($token);   // get the login info from the token
 			$affected_rows = mysqli_stmt_affected_rows($stmt);
-
 			mysqli_stmt_close($stmt);
 
 			if ($affected_rows == 1 & user_exists($primary_email)) // if the account was successfully created
 			{
 				$login_info = login_info($post['primary_email'], $post['password']); // get the login info
-
-				$query = "INSERT INTO user_info (first_name, middle_name, last_name, primary_email, secondary_email, prefix, date_added, roles, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-
-				$stmt = mysqli_prepare($dbc, $query);
-
+				$query      = "INSERT INTO user_info (first_name, middle_name, last_name, primary_email, secondary_email, prefix, date_added, roles, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+				$stmt       = mysqli_prepare($dbc, $query);
 				mysqli_stmt_bind_param($stmt, "sssssssss", $first_name, $middle_name, $last_name, $primary_email, $secondary_email, $prefix, $date, $mainConfig['roles']['default'], $login_info['user_id']);
-
 				mysqli_stmt_execute($stmt); // create the user info
-
 				$affected_rows = mysqli_stmt_affected_rows($stmt);
 
 				if ($affected_rows == 1) // if the user info was added
@@ -181,7 +170,6 @@
 			<input type="radio" name="prefix" value="Mrs." required>Mrs
 			<input type="radio" name="prefix" value="Ms." required>Ms
 		</p>
-
 
 		<p>Password:
 			<input type="password" name="password" required>
