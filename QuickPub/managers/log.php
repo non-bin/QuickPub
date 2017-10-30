@@ -15,33 +15,30 @@ function dump($var, $print = true, $label = true) // dump the contents of a vari
 	}
 
 	$out = var_export($var, true); // export the variable
-	$out = preg_replace('%\n%', '<br>', $out); // replace new lines with <br> tags
-	$out = preg_replace('%\s\s%', ':&nbsp;&nbsp;&nbsp;', $out); // replace tabs with ":   "
-	$out = stripslashes($out); // strip the slashes
-	$out = $out . '<br>'; // remove backslashes
+	$out = $out .'<br>';
 
 	if ($label)
 	{
 		if ($print) // if the function is called to return it's value
 		{
-			echo $varName . ' = ' . $out; // echo it
-			return $varName . ' = ' . $out; // then return it
+			echo '<pre>' . $varName . ' = ' . $out . '</pre>'; // echo it
+			return '<pre>' . $varName . ' = ' . $out . '</pre>'; // then return it
 		}
 		else // if not
 		{
-			return $varName . ' = ' . $out; // just return it
+			return '<pre>' . $varName . ' = ' . $out . '</pre>'; // just return it
 		}
 	}
 	else
 	{
 		if ($print) // if the function is called to return it's value
 		{
-			echo $out; // echo it
-			return $out; // then return it
+			echo '<pre>' . $out . '</pre>'; // echo it
+			return '<pre>' . $out . '</pre>'; // then return it
 		}
 		else // if not
 		{
-			return $out; // just return it
+			return '<pre>' . $out . '</pre>'; // just return it
 		}
 	}
 }
