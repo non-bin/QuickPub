@@ -7,6 +7,7 @@
 	<?php
 
 	require_once '../../managers/log.php';
+	require '../../managers/wordpressCodeX.php';
 	require '../../managers/dataValidation.php';
 	require '../../managers/requests.php';
 	if ($post) // if post was used

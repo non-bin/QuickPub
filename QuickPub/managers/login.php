@@ -47,6 +47,8 @@ function login_info($email, $password) // get the login info for a user (a passw
 	$result = mysqli_stmt_get_result($stmt);
 	$return = mysqli_fetch_assoc($result);
 
+	validate($return, 'sqlAssoc');
+
 	if ($extraOutput = mysqli_fetch_assoc($result)) // if extra values were received
 	{
 		echo addLogEntry('Extra values were received', 'error', '0004~1'); // throw an error

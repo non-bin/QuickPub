@@ -1,6 +1,7 @@
 <?php
 
 require '../../managers/log.php';
+require '../../managers/wordpressCodeX.php';
 require '../../managers/dataValidation.php';
 require_once '../../managers/requests.php';
 
@@ -15,7 +16,7 @@ if ($post & isset($post['submit'])) // if post was used and a form was submitted
 	}
 	else
 	{
-		if (!$post['password'] == clean_string($post['password'])) // check if the password safe (mysql.php)
+		if (!$post['password'] == validate($post['password'], 'password')) // check if the password safe (mysql.php)
 		{
 			$data_unsafe[] = 'password'; // add password to the list
 		}
@@ -27,7 +28,7 @@ if ($post & isset($post['submit'])) // if post was used and a form was submitted
 	}
 	else
 	{
-		if (!$post['email'] == clean_string($post['email'])) // check if the email safe (mysql.php)
+		if (!$post['email'] == validate($post['email'], 'email')) // check if the email safe (mysql.php)
 		{
 			$data_unsafe[] = 'email'; // add email to the list
 		}

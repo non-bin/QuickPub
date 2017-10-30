@@ -5,7 +5,11 @@
 
 function validate($variable, $type, $fallback = false) // fallback is returned if the value that would be returned is empty
 {
-	if ($type == 'sqlStr') // escape a string for use in a sql query NOTE: DO NOT PASS A FULL SQL QUERY!
+	if ($type == 'default') // default string cleaner
+	{
+		$return = $variable;
+	}
+	elseif ($type == 'sqlStr') // escape a string for use in a sql query NOTE: DO NOT PASS A FULL SQL QUERY!
 	{
 		$return = esc_sql($variable);
 	}
@@ -21,13 +25,30 @@ function validate($variable, $type, $fallback = false) // fallback is returned i
 	{
 		$return = $variable;
 	}
+	elseif ($type == 'email') // returns a sanitized email, or false if no email was found
+	{
+		$return = sanitize_email($variable);
+
+		if (is_email($return))
+		{
+			$return = $variable;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	elseif ($type == 'password') // dose nothing :)
+	{
+		$return = $variable;
+	}
 	elseif ($type == 'request') // used for GET or POST variables there's nothing here but I've put in the groundwork for it anyway
 	{
-		if (isset($_POST['info']))   // if there is an info section in the post request
+		if (isset($_POST['info'])) // if there is an info section in the post request
 		{
 			foreach ($_POST['info'] as $key => $value) // clean all of the data and add it to the post variable
 			{
-				$post['info'][clean_string($key)] = clean_string($value);
+				$post['info'][$key] = $value;
 			}
 		}
 
@@ -35,7 +56,7 @@ function validate($variable, $type, $fallback = false) // fallback is returned i
 		{
 			foreach ($_POST['user'] as $key => $value) // clean all of the data and add it to the post variable
 			{
-				$post['user'][clean_string($key)] = clean_string($value);
+				$post['user'][$key] = $value;
 			}
 		}
 
@@ -43,7 +64,7 @@ function validate($variable, $type, $fallback = false) // fallback is returned i
 		{
 			if (is_string($_POST[$key])) // clean all of the data and add it to the post variable
 			{
-				$post[clean_string($key)] = clean_string($value);
+				$post[$key] = $value;
 			}
 		}
 	}

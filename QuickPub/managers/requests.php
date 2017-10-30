@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") // if the page was requested with POST
 	{
 		foreach ($_POST['info'] as $key => $value) // clean all of the data and add it to the post variable
 		{
-			$post['info'][clean_string($key)] = clean_string($value);
+			$post['info'][validate($key, 'default')] = validate($value, 'default');
 		}
 	}
 
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") // if the page was requested with POST
 	{
 		foreach ($_POST['user'] as $key => $value) // clean all of the data and add it to the post variable
 		{
-			$post['user'][clean_string($key)] = clean_string($value);
+			$post['user'][validate($key, 'default')] = validate($value, 'default');
 		}
 	}
 
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") // if the page was requested with POST
 	{
 		if (is_string($_POST[$key])) // clean all of the data and add it to the post variable
 		{
-			$post[clean_string($key)] = clean_string($value);
+			$post[validate($key, 'default')] = validate($value, 'default');
 		}
 	}
 

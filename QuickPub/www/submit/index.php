@@ -1,5 +1,6 @@
 <?php
 
+require_once '../../managers/wordpressCodeX.php';
 require_once '../../managers/dataValidation.php';
 require '../../managers/flow.php';
 

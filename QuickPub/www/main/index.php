@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') // if the page was not requested with 
 }
 
 require '../../managers/log.php';
+require '../../managers/wordpressCodeX.php';
 require '../../managers/dataValidation.php';
 require_once '../../managers/requests.php';
 require_once '../../managers/login.php';
