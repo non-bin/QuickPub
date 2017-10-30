@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.1.0] - unreleased
+## [v0.1.0-1] - 17-30-10
 ### Notes
 Basically all of these things were in v0.0.X-alpha but none of them work so I'm putting them all in v0.1.0 and actually making it work.
 
