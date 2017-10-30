@@ -49,8 +49,7 @@ function addFlowEntry($flowId, $content, $ownerId, $createdByRole) // add an ent
 	mysqli_stmt_execute($stmt);
 	$affected_rows = mysqli_stmt_affected_rows($stmt);
 
-	dump($affected_rows);
-	echo "-------------------------<br>";
+	// dump(mysqli_error($dbc));
 
 	if ($affected_rows == 1) // if it worked
 	{
@@ -92,7 +91,7 @@ function addFlowEntry($flowId, $content, $ownerId, $createdByRole) // add an ent
 	}
 	else // if the entry creation failed
 	{
-		addLogEntry('affected rows was 0 on flow entry creation', 'error', '0005~0'); // throw an error
+		addLogEntry('affected rows was ' . $affected_rows . ', should be 1 on flow entry creation', 'error', '0005~0'); // throw an error
 		return false; // return false
 	}
 }

@@ -5,6 +5,8 @@
 </head>
 <body>
 	<?php
+
+	require_once '../../managers/log.php';
 	require '../../managers/dataValidation.php';
 	require '../../managers/requests.php';
 	if ($post) // if post was used
@@ -72,7 +74,6 @@
 			require_once '../../managers/mysql.php';
 			require_once '../../managers/login.php';
 			require_once '../../managers/config.php';
-			require_once '../../managers/log.php';
 
 			$hash  = createHash($password); // hash the given password
 			$query = "INSERT INTO login_info (primary_email, password, date_added, token) VALUES (?, ?, ?, ?)";
@@ -81,7 +82,7 @@
 			$token = create_token(); // create a token
 			mysqli_stmt_bind_param($stmt, "ssss", $primary_email, $hash, $date, $token);
 			mysqli_stmt_execute($stmt); // create the account
-			login_info_token($token); // get the login info from the token
+			login_info_token($token);   // get the login info from the token
 			$affected_rows = mysqli_stmt_affected_rows($stmt);
 			mysqli_stmt_close($stmt);
 

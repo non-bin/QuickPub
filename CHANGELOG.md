@@ -1,10 +1,14 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. For a more detailed log, see [DEVCHANGELOG.md]()
+All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.1.0-alpha] - unreleased
+## [v0.1.0] - unreleased
+### Notes
+Basically all of these things were in v0.0.X-alpha but none of them work so I'm putting them all in v0.1.0 and actually making it work.
+
 ### Added
  - comments
  - added the use of includes
@@ -34,7 +38,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
  - flows
  - added invalid role error handling
 
-### Changes
+### Fixed
+ - file uploads
+
+### Changed
  - updated database
  - renamed mysql_connect to mysql
  - moved config outside www
@@ -43,7 +50,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
  - moved managers to managers directory
  - updated login auth
  - updated dump function
-
 
 ### Removed
  - managers

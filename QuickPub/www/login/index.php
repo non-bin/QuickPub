@@ -1,6 +1,7 @@
 <?php
-require '../../managers/dataValidation.php';
+
 require '../../managers/log.php';
+require '../../managers/dataValidation.php';
 require_once '../../managers/requests.php';
 
 if ($post & isset($post['submit'])) // if post was used and a form was submitted (someone has logged in)
