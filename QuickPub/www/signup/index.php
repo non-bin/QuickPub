@@ -5,10 +5,14 @@
 </head>
 <body>
 	<?php
-	require '../../request_manager.php';
-	if (isset($post['submit']))
+
+	require_once '../../managers/log.php';
+	require '../../managers/wordpressCodeX.php';
+	require '../../managers/dataValidation.php';
+	require '../../managers/requests.php';
+	if ($post) // if post was used
 	{
-		$data_missing = array();
+		$data_missing = array(); // check if any data is missing
 
 		if (empty($post['prefix']))
 		{
@@ -16,7 +20,7 @@
 		}
 		else
 		{
-			$prefix = trim($post['prefix']);
+			$prefix = $post['prefix'];
 		}
 
 		if (empty($post['first_name']))
@@ -25,12 +29,12 @@
 		}
 		else
 		{
-			$first_name = trim($post['first_name']);
+			$first_name = $post['first_name'];
 		}
 
 		if (!empty($post['middle_name']))
 		{
-			$middle_name = trim($post['middle_name']);
+			$middle_name = $post['middle_name'];
 		}
 
 		if (empty($post['last_name']))
@@ -39,7 +43,7 @@
 		}
 		else
 		{
-			$last_name = trim($post['last_name']);
+			$last_name = $post['last_name'];
 		}
 
 		if (empty($post['primary_email']))
@@ -48,12 +52,12 @@
 		}
 		else
 		{
-			$primary_email = trim($post['primary_email']);
+			$primary_email = $post['primary_email'];
 		}
 
 		if (!empty($post['secondary_email']))
 		{
-			$secondary_email = trim($post['secondary_email']);
+			$secondary_email = $post['secondary_email'];
 		}
 
 		if (empty($post['password']))
@@ -62,62 +66,45 @@
 		}
 		else
 		{
-			$password = trim($post['password']);
+			$password = $post['password'];
 		}
 
-		if (empty($data_missing))
+		if (empty($data_missing)) // if nothing was missing
 		{
-			define('mysqli_dublicate_error_no', '1062');
 
-			require '../../mysql.php';
-			require '../../login_manager.php';
-			require '../../config_manager.php';
-			require_once '../../log.php';
+			require_once '../../managers/mysql.php';
+			require_once '../../managers/login.php';
+			require_once '../../managers/config.php';
 
-			$hash = createHash($password);
-
+			$hash  = createHash($password); // hash the given password
 			$query = "INSERT INTO login_info (primary_email, password, date_added, token) VALUES (?, ?, ?, ?)";
-
-			$date = date("d/m/y H:i.s");
-
-			$stmt = mysqli_prepare($dbc, $query);
-
-			$token = create_token();
-
+			$date  = date("d/m/y H:i.s"); // get the date and time
+			$stmt  = mysqli_prepare($dbc, $query);
+			$token = create_token(); // create a token
 			mysqli_stmt_bind_param($stmt, "ssss", $primary_email, $hash, $date, $token);
-
-			mysqli_stmt_execute($stmt);
-
-			login_info_token($hash);
-
+			mysqli_stmt_execute($stmt); // create the account
+			login_info_token($token);   // get the login info from the token
 			$affected_rows = mysqli_stmt_affected_rows($stmt);
-
 			mysqli_stmt_close($stmt);
 
-			if ($affected_rows == 1)
+			if ($affected_rows == 1 & user_exists($primary_email)) // if the account was successfully created
 			{
-
-				$login_info = login_info($post['primary_email'], $post['password']);
-
-				$query = "INSERT INTO user_info (first_name, middle_name, last_name, primary_email, secondary_email, prefix, date_added, roles, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-
-				$stmt = mysqli_prepare($dbc, $query);
-
+				$login_info = login_info($post['primary_email'], $post['password']); // get the login info
+				$query      = "INSERT INTO user_info (first_name, middle_name, last_name, primary_email, secondary_email, prefix, date_added, roles, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+				$stmt       = mysqli_prepare($dbc, $query);
 				mysqli_stmt_bind_param($stmt, "sssssssss", $first_name, $middle_name, $last_name, $primary_email, $secondary_email, $prefix, $date, $mainConfig['roles']['default'], $login_info['user_id']);
-
-				mysqli_stmt_execute($stmt);
-
+				mysqli_stmt_execute($stmt); // create the user info
 				$affected_rows = mysqli_stmt_affected_rows($stmt);
 
-				if ($affected_rows == 1)
+				if ($affected_rows == 1) // if the user info was added
 				{
-					echo 'User sucessfully added. Please <a href="../login">Login</a>';
+					echo 'User successfully added. Please <a href="../login">Login</a>'; // get the user to log in
 
 					mysqli_stmt_close($stmt);
 
 					die();
 				}
-				else
+				else // if not
 				{
 					if (user_exists($post['primary_email']))
 					{
@@ -125,9 +112,7 @@
 					}
 					else
 					{
-						echo 'An error ocured while exicuting database query two';
-						addLogEntry("Error while exicuting database query to user_info", "error", "0004");
-						die();
+						addLogEntry("Error while executing database query to user_info", "error", "0004~2");
 					}
 				}
 			}
@@ -139,15 +124,13 @@
 				}
 				else
 				{
-					echo 'An error ocured while exicuting database query one';
-					addLogEntry("Error while exicuting database query to login_info", "error", "0004~0");
-					die();
+					addLogEntry("Error while executing database query to login_info", "error", "0004~2");
 				}
 			}
 		}
-		else
+		else // if data wasn't submitted
 		{
-			echo "The folowing data was not submited: ";
+			echo "The flowing data was not submitted: ";
 
 			foreach ($data_missing as $missing)
 			{
@@ -177,7 +160,7 @@
 			<input type="text" name="primary_email" required>
 		</p>
 
-		<p>Scondary Email:
+		<p>Secondary Email:
 			<input type="text" name="secondary_email">
 		</p>
 
@@ -187,7 +170,6 @@
 			<input type="radio" name="prefix" value="Mrs." required>Mrs
 			<input type="radio" name="prefix" value="Ms." required>Ms
 		</p>
-
 
 		<p>Password:
 			<input type="password" name="password" required>

@@ -1,12 +1,14 @@
 <?php
 
-require '../../log.php';
-require '../../request_manager.php';
+require '../../managers/log.php';
+require '../../managers/wordpressCodeX.php';
+require '../../managers/dataValidation.php';
+require_once '../../managers/requests.php';
 
-if (isset($post['submit'])) // if a form was submited (someone has loged in)
+if ($post & isset($post['submit'])) // if post was used and a form was submitted (someone has logged in)
 {
 	$data_missing = array(); // make an array for the missing data
-	$data_safe = array(); // make an array for the unsafe data
+	$data_unsafe  = array(); // make an array for the unsafe data
 
 	if (empty($post['password'])) // if the password is missing
 	{
@@ -14,9 +16,9 @@ if (isset($post['submit'])) // if a form was submited (someone has loged in)
 	}
 	else
 	{
-		if ($post['password'] == clean_string($post['password'])) // check if the password safe (mysql.php)
+		if (!$post['password'] == validate($post['password'], 'password')) // check if the password safe (mysql.php)
 		{
-			$data_safe[] = 'password'; // add password to the list
+			$data_unsafe[] = 'password'; // add password to the list
 		}
 	}
 
@@ -26,47 +28,22 @@ if (isset($post['submit'])) // if a form was submited (someone has loged in)
 	}
 	else
 	{
-		if ($post['email'] == clean_string($post['email'])) // check if the email safe (mysql.php)
+		if (!$post['email'] == validate($post['email'], 'email')) // check if the email safe (mysql.php)
 		{
-			$data_safe[] = 'email'; // add email to the list
+			$data_unsafe[] = 'email'; // add email to the list
 		}
 	}
 
-	if (empty($data_missing) & empty($data_safe))
+	if (empty($data_missing) & empty($data_unsafe)) // if all data was submitted and is safe
 	{
-		require '../../mysql.php';
-		require '../../login_manager.php';
+		require_once '../../managers/mysql.php'; // connect to the MySQL database
+		require_once '../../managers/login.php';
 
-		$query = "SELECT * FROM login_info where primary_email = ?;";
+		$loginInfo = login_info($post['email'], $post['password'])['user_id'];
 
-		$stmt = mysqli_prepare($dbc, $query);
-
-		mysqli_stmt_bind_param($stmt, "s", $email);
-
-		mysqli_stmt_execute($stmt);
-
-		$result = mysqli_stmt_get_result($stmt);
-
-		$output = mysqli_fetch_assoc($result);
-
-		if ($extraOutput = mysqli_fetch_assoc($result))
+		if (verifyUser($post['email'], $post['password'])) // verify the credentials
 		{
-			echo "<b>Warning:</b> MySQL retrned extra values<br>";
-		}
-
-		if (!mysqli_error($dbc) == "")
-		{
-			die(addLogEntry("Error while excuting MySQL query", "error", "0004"));
-		}
-
-		if ($output == null)
-		{
-			die("The email or password was incorect");
-		}
-
-		if (verifyPassword($password, $output['password']))
-		{
-			$token = create_token(login_info($email, $password)['user_id']);
+			$token = create_token($loginInfo); // give the user a token
 
 			die('
 				<html>
@@ -74,7 +51,7 @@ if (isset($post['submit'])) // if a form was submited (someone has loged in)
 					<form action="../main/index.php" method="post">
 						<input type="hidden" name="info[token]" value="' . $token . '">
 						<div id="manual" style="display: none;">
-							if your browser dose not suport automatic redirects, click <input type="submit" value="here">
+							if your browser dose not support automatic redirects, click <input type="submit" value="here">
 						</div>
 				</form>
 				<script type="text/javascript">document.forms[0].submit();</script>
@@ -83,18 +60,32 @@ if (isset($post['submit'])) // if a form was submited (someone has loged in)
 			</html>
 			');
 		}
-		else
+		else // if the credentials are incorrect
 		{
-			echo "The email or password was incorect";
+			echo "The email or password was incorrect"; // tell the user
 		}
 	}
-	else
+	else // if any data was unsubstituted or unsafe
 	{
-		echo "The folowing data was not submited: ";
-
-		foreach ($data_missing as $missing)
+		if (!empty($data_missing))
 		{
-			echo $missing . " ";
+			echo "The following data was not submitted: ";
+
+			foreach ($data_missing as $missing)
+			{
+				echo $missing . " ";
+			}
+			echo "<br>";
+		}
+
+		if (!empty($data_unsafe))
+		{
+			echo "The following fields contain illegal characters: ";
+
+			foreach ($data_unsafe as $unsafe)
+			{
+				echo $unsafe . " ";
+			}
 		}
 	}
 

@@ -1,5 +1,10 @@
 <?php
-require_once '../../other.php';
-dump(preg_replace('%([^A-Za-z0-9\s])%', '', 'Daqawa12#$39655'));
-dump('Daqawa12#$39655');
+require_once '../../managers/config.php';
+require_once '../../managers/flow.php';
+require_once '../../managers/form.php';
+require_once '../../managers/log.php';
+require_once '../../managers/login.php';
+require_once '../../managers/mysql.php';
+require_once '../../managers/requests.php';
+dump(viewFlowBy({'user_id':'20'}));
 ?>

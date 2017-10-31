@@ -15,15 +15,16 @@
 					"maxWords": "2"
 				},
 				{
-					"title": "This is a Text Input! WOW!",
+					"title": "Message For Harry",
 					"name": "textInput",
 					"type": "text",
 					"id": "textInput"
 				},
 				{
-					"title": "File",
+					"title": "not a file uploader",
 					"name": "file",
-					"type": "file"
+					"type": "file",
+					"id": "file"
 				},
 				{
 					"title": "Submit",
