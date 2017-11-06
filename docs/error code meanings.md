@@ -31,5 +31,5 @@
    - 0006~1 - error while moving uploaded file
 
  - 0007 - config error
-   - 0007~0 - unable to locate requested file. if editing config manually it's going to be a bit hard to find where its used :)
-   - 0007~1 - unable to open/read/decode json config file
+   - 0007~0 - unable to locate requested file
+   - 0007~1 - unable to open/read/wright/decode config file
