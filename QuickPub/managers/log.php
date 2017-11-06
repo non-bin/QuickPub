@@ -2,17 +2,16 @@
 
 function dump($var, $print = true, $label = true) // dump the contents of a variable
 {
-	if ($label)
+	if ($label) // if a label is wanted
 	{
-		$trace = debug_backtrace();
-		$vLine = file($trace[0]['file']);
-		$fLine = $vLine[$trace[0]['line'] - 1];
-		preg_match_all("/\\$(\w+)/", $fLine, $match);
-		$varName = $match[0][0];
+		$trace = debug_backtrace();                   // retrieve the debug_traceback
+		$vLine = file($trace[0]['file']);             // find the file where the call was made
+		$fLine = $vLine[$trace[0]['line'] - 1];       // find the line where the call was made
+		preg_match_all("/\\$(\w+)/", $fLine, $match); // find the variable name that was passed to dump
+		@$varName = $match[0][0] or $label = false;   // ditto, and if it fails, don't print a label
 	}
 
-	$out = var_export($var, true); // export the variable
-	$out = $out . '<br>';
+	$out = var_export($var, true) . '<br>'; // export the variable
 
 	if ($label)
 	{
@@ -40,7 +39,7 @@ function dump($var, $print = true, $label = true) // dump the contents of a vari
 	}
 }
 
-function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorNo = '0000', $echoPath = true)
+function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorNo = '0000', $echoPath = true) // add an entry to a log
 {
 	/*
 	detail of error reporting:

@@ -33,7 +33,7 @@ function compileConfig() // compile the config files
 
 function saveConfig($configArray) // save a config array to config/config.php
 {
-	$compiledConfig = "<?php\n\nconst CONFIG = " . var_export($configArray, true) . ";\n\n?>"; // compile by using the var_export function
+	$compiledConfig = "<?php\n\nconst CONFIG = " . var_export($configArray, true) . ";\n\n?>\n"; // compile by using the var_export function
 
 	$compiledConfigFilePath = realpath('../config/') . '/config.php';
 
