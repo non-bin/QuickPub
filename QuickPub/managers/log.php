@@ -1,9 +1,5 @@
 <?php
 
-define('return_errors', 'none');    // error detail returned from function
-define('display_errors', 'simple'); // error detail to be echoed to the page
-define('log_errors', 'full');       // error detail to be logged to the error log file (logs/error.log)
-
 function dump($var, $print = true, $label = true) // dump the contents of a variable
 {
 	if ($label)
@@ -54,7 +50,7 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 	full: verbose output
 	 */
 
-	// $echoPath = $config['system']['echoPath'];
+	// $echoPath = CONFIG['system']['echoPath'];
 
 	$genralLogPath = realpath('../../') . '/logs/general.log'; // save the log files paths
 	$errorLogPath  = realpath('../../') . '/logs/error.log';
@@ -119,38 +115,38 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 			$errorLocationHtml = '';
 		}
 
-		if (log_errors == 'full') // verbose output
+		if (CONFIG['system']['logErrors'] == 'full') // verbose output
 		{
-			fwrite($errorLog, $logString);    // wright the verbose report to the error file
+			fwrite($errorLog, $logString);                       // wright the verbose report to the error file
 		}
-		elseif (log_errors == 'simple') // simple output
+		elseif (CONFIG['system']['logErrors'] == 'simple') // simple output
 		{
 			$logString = 'Quickpub Warning: (' . $errorNo . ') ' . $description . ' in ' . $errorLocation . '\n';
 			fwrite($errorLog, $logString); // write the simple error report to file
 		}
 
-		if (return_errors == 'full') // verbose output
+		if (CONFIG['system']['returnErrors'] == 'full') // verbose output
 		{
-			$logString = htmlspecialchars($logString);       // clean the verbose output variable for use in html
-			return preg_replace('%\n%', "<br>", $logString); // return the clean string
+			$logString = htmlspecialchars($logString);              // clean the verbose output variable for use in html
+			return preg_replace('%\n%', "<br>", $logString);        // return the clean string
 		}
-		elseif (return_errors == 'simple')             // simple output
+		elseif (CONFIG['system']['returnErrors'] == 'simple') // simple output
 		{
 			$logString = 'Quickpub Warning: (' . $errorNo . ') ' . $description . ' in ' . $errorLocation;
-			return $logString;                       // return the simple error report
+			return $logString;                                          // return the simple error report
 		}
-		elseif (return_errors == 'simplehtml') // simple output
+		elseif (CONFIG['system']['returnErrors'] == 'simplehtml') // simple output
 		{
 			$logString = '<b>Quickpub Warning: </b>(' . $errorNo . ') ' . $description . $errorLocationHtml . '<br>';
 			return $logString; // return the simple error report
 		}
 
-		if (display_errors == 'full') // verbose output
+		if (CONFIG['system']['displayErrors'] == 'full') // verbose output
 		{
-			$logString = htmlspecialchars($logString);     // clean the verbose output variable for use in html
-			echo preg_replace('%\n%', "<br>", $logString); // echo the clean string
+			$logString = htmlspecialchars($logString);               // clean the verbose output variable for use in html
+			echo preg_replace('%\n%', "<br>", $logString);           // echo the clean string
 		}
-		elseif (display_errors == 'simple')          // simple output
+		elseif (CONFIG['system']['displayErrors'] == 'simple') // simple output
 		{
 			$logString = '<b>Quickpub Warning: </b>(' . $errorNo . ') ' . $description . $errorLocationHtml . '<br>';
 			echo $logString; // echo the simple error report
