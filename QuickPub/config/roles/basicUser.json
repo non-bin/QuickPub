@@ -9,7 +9,6 @@
 			"name": "basic",
 			"title": "Basic",
 			"action": "basic",
-			"configPath": "basic.json"
 		}
 	}
 }

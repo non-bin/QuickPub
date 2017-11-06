@@ -6,9 +6,10 @@
 	},
 	"system":
 	{
-		"return_errors": "none",
-		"display_errors": "simple",
-		"log_errors": "full"
+		"echoErrorPath": true,
+		"returnDrrors": "none",
+		"displayErrors": "simple",
+		"logErrors": "full"
 	},
 	"roles":
 	{
@@ -19,6 +20,17 @@
 		"BU":
 		{
 			"configPath": "basicUser.json"
+		}
+	},
+	"actions":
+	{
+		"test":
+		{
+			"configPath": "test.json"
+		},
+		"basic":
+		{
+			"configPath": "basic.json"
 		}
 	}
 }

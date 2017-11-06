@@ -9,14 +9,12 @@
 			"name": "test",
 			"title": "Test",
 			"action": "test",
-			"configPath": "test.json"
 		},
 		"basic":
 		{
 			"name": "basic",
 			"title": "Basic",
 			"action": "basic",
-			"configPath": "basic.json"
 		}
 	}
 }
