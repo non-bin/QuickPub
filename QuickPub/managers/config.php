@@ -24,6 +24,16 @@ function compileConfig()
 	}
 
 	return $config;
+	foreach ($config['actions'] as $code => $value) // loop through each action specified in main.json
+	{
+		if (!$config['actions'][$code] = readConfigFile('../config/actions/' . $config['actions'][$code]['configPath'])) // if reading it fails
+		{
+			fail($config['actions'][$code]['configPath']); // tell the user
+			return false;                                 // and ret0
+		}
+	}
+
+	return $config; // if all gos well, return the config
 }
 
 function readConfigFile($relativePath)
