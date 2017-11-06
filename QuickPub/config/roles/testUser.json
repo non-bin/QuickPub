@@ -14,7 +14,7 @@
 		{
 			"name": "basic",
 			"title": "Basic",
-			"action": "basic",
+			"action": "basic"
 		}
 	}
 }
