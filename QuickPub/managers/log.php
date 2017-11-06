@@ -88,6 +88,11 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 
 		}
 
+		if (strpos($errorNo, "0003") !== false) // if the error number is 0003 (JSON error)
+		{
+			$errorNo = $errorNo . '~' . ; // use the contents of json_last_error() as the error number
+		}
+
 		$logString = "//----------------------------------------------\n\n" . date("d/m/y H:i.s - ") . $errorNo . "\n\n" . $description . "\nError called in file: " . preg_replace("/\\\\/", "/", $debugInfo['0']['file']) . " on line: " . $debugInfo['0']['line'] . "\nUseful Information:\n\ndebugInfo:\n" . stripslashes(var_export($debugInfo, true)) . "\n\n_SERVER:\n" . stripslashes(var_export($_SERVER, true)) . "\n\n\n"; // create the verbose output
 
 		// these two lines can be added to:
