@@ -31,7 +31,7 @@ function readConfigFile($relativePath)
 	if (!$configFilePath = realpath($relativePath)) // get the path to main.json file, and if it doesn't exist
 	{
 		addLogEntry($relativePath . " is missing or moved", "error", "0007~0"); // tell the user but don't print the location
-		return false;                                                    // then return
+		return false;                                                           // then return
 	}
 
 	if (!$configFile = fopen($configFilePath, "r")) // open the config file, if that fails
@@ -48,8 +48,8 @@ function readConfigFile($relativePath)
 
 	if (!$config = jsonDecode($configRaw))
 	{
-		addLogEntry("unable to decode " . $relativePath, "error", "0007~1"); // tell the user but don't print the location
-		return false;                                                        // then return
+		addLogEntry("unable to decode " . $relativePath . '. try putting the contents of it into <a href="https://jsonlint.com/">https://jsonlint.com/</a>.', "error", "0007~1"); // tell the user but don't print the location
+		return false;                                                                                                                                                             // then return
 	}
 
 	return $config;
