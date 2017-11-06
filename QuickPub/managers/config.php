@@ -30,7 +30,7 @@ function readConfigFile($relativePath)
 {
 	if (!$configFilePath = realpath($relativePath)) // get the path to main.json file, and if it doesn't exist
 	{
-		addLogEntry("main.json is missing or moved", "error", "0007~0"); // tell the user but don't print the location
+		addLogEntry($relativePath . " is missing or moved", "error", "0007~0"); // tell the user but don't print the location
 		return false;                                                    // then return
 	}
 
@@ -42,13 +42,13 @@ function readConfigFile($relativePath)
 
 	if (!$configRaw = fread($configFile, filesize($configFilePath))) // read the contest of the file
 	{
-		addLogEntry("unable to open " . $relativePath, "error", "0007~1"); // tell the user but don't print the location
+		addLogEntry("unable to read " . $relativePath, "error", "0007~1"); // tell the user but don't print the location
 		return false;                                                      // then return
 	}
 
 	if (!$config = jsonDecode($configRaw))
 	{
-		addLogEntry("unable to decode " . $relativePath, "error", "0007~2"); // tell the user but don't print the location
+		addLogEntry("unable to decode " . $relativePath, "error", "0007~1"); // tell the user but don't print the location
 		return false;                                                        // then return
 	}
 
@@ -57,7 +57,7 @@ function readConfigFile($relativePath)
 
 function fail($place)
 {
-	echo 'failed config updating at ' . $place . '. There should be more errors before this, and way more info in the error log so try and fix the config and try again. Good luck :)';
+	echo '<br><b>failed config updating at ' . $place . '. There should be more errors before this, and way more info in the error log so try and fix the config and try again. Good luck :)</b>';
 	return false;
 }
 
