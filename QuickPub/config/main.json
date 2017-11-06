@@ -7,7 +7,7 @@
 	"system":
 	{
 		"echoErrorPath": true,
-		"returnDrrors": "none",
+		"returnErrors": "none",
 		"displayErrors": "simple",
 		"logErrors": "full"
 	},
