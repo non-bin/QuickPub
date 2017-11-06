@@ -76,7 +76,7 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 	{
 		if ($logName != 'error')
 		{
-			echo 'note: logName was ' . $logName . ' which is invalid, asuming \'error\'';
+			echo 'note: logName was ' . $logName . ' which is invalid, assuming \'error\'';
 		}
 
 		$debugInfo = debug_backtrace(); // get the debug traceback
