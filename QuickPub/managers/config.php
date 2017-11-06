@@ -28,7 +28,7 @@ function compileConfig() // compile the config files
 		if (!$config['actions'][$code] = readConfigFile('../config/actions/' . $config['actions'][$code]['configPath'])) // if reading it fails
 		{
 			fail($config['actions'][$code]['configPath']); // tell the user
-			return false;                                 // and ret0
+			return false;                                  // and ret0
 		}
 	}
 
