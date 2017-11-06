@@ -44,7 +44,7 @@ function dump($var, $print = true, $label = true) // dump the contents of a vari
 	}
 }
 
-function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorNo = '0000')
+function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorNo = '0000', $echoPath = true)
 {
 	/*
 	detail of error reporting:
@@ -53,6 +53,8 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 	simplehtml: return only, html format simple error report in the format 'Quickpub Warning: <description> in <file> on line <line>'
 	full: verbose output
 	 */
+
+	// $echoPath = $config['system']['echoPath'];
 
 	$genralLogPath = realpath('../../') . '/logs/general.log'; // save the log files paths
 	$errorLogPath  = realpath('../../') . '/logs/error.log';
@@ -95,6 +97,17 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 
 		// Redirect on error
 		// echo "<script>window.location.href = 'http://' + window.location.hostname + '/V.3/www/error.php?errno=" . $errorNo . "';</script>";
+
+		if ($echoPath)
+		{
+			$errorLocation     = $debugInfo['0']['file'] . ' on line ' . $debugInfo['0']['line'];
+			$errorLocationHtml = ' in <b>' . $debugInfo['0']['file'] . '</b> on line <b>' . $debugInfo['0']['line'] . '</b>';
+		}
+		else
+		{
+			$errorLocation     = '';
+			$errorLocationHtml = '';
+		}
 
 		if (log_errors == 'full') // verbose output
 		{
