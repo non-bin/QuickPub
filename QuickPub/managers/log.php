@@ -1,8 +1,8 @@
 <?php
 
-define('return_errors', 'none'); // error detail returned from function
+define('return_errors', 'none');    // error detail returned from function
 define('display_errors', 'simple'); // error detail to be echoed to the page
-define('log_errors', 'full'); // error detail to be logged to the error log file (logs/error.log)
+define('log_errors', 'full');       // error detail to be logged to the error log file (logs/error.log)
 
 function dump($var, $print = true, $label = true) // dump the contents of a variable
 {
@@ -16,16 +16,16 @@ function dump($var, $print = true, $label = true) // dump the contents of a vari
 	}
 
 	$out = var_export($var, true); // export the variable
-	$out = $out .'<br>';
+	$out = $out . '<br>';
 
 	if ($label)
 	{
 		if ($print) // if the function is called to return it's value
 		{
-			echo '<pre>' . $varName . ' = ' . $out . '</pre>'; // echo it
+			echo '<pre>' . $varName . ' = ' . $out . '</pre>';   // echo it
 			return '<pre>' . $varName . ' = ' . $out . '</pre>'; // then return it
 		}
-		else // if not
+		else                                               // if not
 		{
 			return '<pre>' . $varName . ' = ' . $out . '</pre>'; // just return it
 		}
@@ -34,10 +34,10 @@ function dump($var, $print = true, $label = true) // dump the contents of a vari
 	{
 		if ($print) // if the function is called to return it's value
 		{
-			echo '<pre>' . $out . '</pre>'; // echo it
+			echo '<pre>' . $out . '</pre>';   // echo it
 			return '<pre>' . $out . '</pre>'; // then return it
 		}
-		else // if not
+		else                            // if not
 		{
 			return '<pre>' . $out . '</pre>'; // just return it
 		}
@@ -74,12 +74,12 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 	{
 		$debugInfo = debug_backtrace(); // get the debug traceback
 
-		if ($errorNo == "0004") // if the error number is 0004 (MySQL error)
+		if (strpos($errorNo, "0004") !== false) // if the error number is 0004 (MySQL error)
 		{
-			global $dbc; // get access to the database connection
+			global $dbc;  // get access to the database connection
 			global $stmt; // and sql statement
 
-			$description = mysqli_error($dbc); // use the contents of mysql_error() as the description
+			$errorNo = $errorNo . '~' . $db->connect_errno; // use the contents of mysql_error() as the description
 
 			//this can be used to use the description from the function call as well:
 			// $description = $description . '. ' . mysqli_error($dbc); // add the contents of mysql_error() to the description
@@ -98,38 +98,38 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 
 		if (log_errors == 'full') // verbose output
 		{
-			fwrite($errorLog, $logString); // wright the verbose report to the error file
+			fwrite($errorLog, $logString);    // wright the verbose report to the error file
 		}
 		elseif (log_errors == 'simple') // simple output
 		{
-			$logString = 'Quickpub Warning: (' . $errorNo . ') ' . $description . ' in ' . $debugInfo['0']['file'] . ' on line ' . $debugInfo['0']['line'] . '\n';
+			$logString = 'Quickpub Warning: (' . $errorNo . ') ' . $description . ' in ' . $errorLocation . '\n';
 			fwrite($errorLog, $logString); // write the simple error report to file
 		}
 
 		if (return_errors == 'full') // verbose output
 		{
-			$logString = htmlspecialchars($logString); // clean the verbose output variable for use in html
+			$logString = htmlspecialchars($logString);       // clean the verbose output variable for use in html
 			return preg_replace('%\n%', "<br>", $logString); // return the clean string
 		}
-		elseif (return_errors == 'simple') // simple output
+		elseif (return_errors == 'simple')             // simple output
 		{
-			$logString = 'Quickpub Warning: (' . $errorNo . ') ' . $description . ' in ' . $debugInfo['0']['file'] . ' on line ' . $debugInfo['0']['line'];
-			return $logString; // return the simple error report
+			$logString = 'Quickpub Warning: (' . $errorNo . ') ' . $description . ' in ' . $errorLocation;
+			return $logString;                       // return the simple error report
 		}
 		elseif (return_errors == 'simplehtml') // simple output
 		{
-			$logString = '<b>Quickpub Warning: </b>(' . $errorNo . ') ' . $description . ' in <b>' . $debugInfo['0']['file'] . '</b> on line <b>' . $debugInfo['0']['line'] . '</b><br>';
+			$logString = '<b>Quickpub Warning: </b>(' . $errorNo . ') ' . $description . $errorLocationHtml . '<br>';
 			return $logString; // return the simple error report
 		}
 
 		if (display_errors == 'full') // verbose output
 		{
-			$logString = htmlspecialchars($logString); // clean the verbose output variable for use in html
+			$logString = htmlspecialchars($logString);     // clean the verbose output variable for use in html
 			echo preg_replace('%\n%', "<br>", $logString); // echo the clean string
 		}
-		elseif (display_errors == 'simple') // simple output
+		elseif (display_errors == 'simple')          // simple output
 		{
-			$logString = '<b>Quickpub Warning: </b>(' . $errorNo . ') ' . $description . ' in <b>' . $debugInfo['0']['file'] . '</b> on line <b>' . $debugInfo['0']['line'] . '</b><br>';
+			$logString = '<b>Quickpub Warning: </b>(' . $errorNo . ') ' . $description . $errorLocationHtml . '<br>';
 			echo $logString; // echo the simple error report
 		}
 	}
