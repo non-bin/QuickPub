@@ -72,8 +72,13 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 		$logString = date("d/m/y H:i.s - ") . $description . "\n"; // log to the general log file (logs/general.log) in the format 'dd/mm/yy hh:mm.ss - <description>'
 		fwrite($genralLog, $logString);
 	}
-	elseif ($logName == 'error') // if the output log is 'error'
+	else // else (amusing 'error')
 	{
+		if ($logName != 'error')
+		{
+			echo 'note: logName was ' . $logName . ' which is invalid, asuming \'error\'';
+		}
+
 		$debugInfo = debug_backtrace(); // get the debug traceback
 
 		if (strpos($errorNo, "0004") !== false) // if the error number is 0004 (MySQL error)
@@ -150,10 +155,6 @@ function addLogEntry($description = 'Unknown Error', $logName = 'error', $errorN
 			$logString = '<b>Quickpub Warning: </b>(' . $errorNo . ') ' . $description . $errorLocationHtml . '<br>';
 			echo $logString; // echo the simple error report
 		}
-	}
-	else
-	{
-		addLogEntry('Error while adding log entry', 'error', '0001~0');
 	}
 }
 
