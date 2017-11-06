@@ -1,0 +1,15 @@
+{
+	"name": "basicUser",
+	"title": "Basic User",
+	"code": "BU",
+	"actions":
+	{
+		"basic":
+		{
+			"name": "basic",
+			"title": "Basic",
+			"action": "basic",
+			"configPath": "basic.json"
+		}
+	}
+}

@@ -1,0 +1,24 @@
+{
+	"main":
+	{
+		"title": "QuickPub",
+		"defaultRole": "BU"
+	},
+	"system":
+	{
+		"return_errors": "none",
+		"display_errors": "simple",
+		"log_errors": "full"
+	},
+	"roles":
+	{
+		"TU":
+		{
+			"configPath": "testUser.json"
+		},
+		"BU":
+		{
+			"configPath": "basicUser.json"
+		}
+	}
+}

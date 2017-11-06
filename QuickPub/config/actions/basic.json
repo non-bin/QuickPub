@@ -1,0 +1,36 @@
+{
+	"name": "basic",
+	"title": "Basic",
+	"pages":
+	[
+		{
+			"name": "Demo Page",
+			"elements":
+			[
+				{
+					"title": "Title",
+					"name": "title",
+					"type": "text",
+					"id": "title"
+				},
+				{
+					"title": "Text Input",
+					"name": "textInput",
+					"type": "text",
+					"id": "textInput"
+				},
+				{
+					"title": "File Input",
+					"name": "file",
+					"type": "file",
+					"id": "file"
+				},
+				{
+					"title": "Submit",
+					"name": "submit",
+					"type": "submit"
+				}
+			]
+		}
+	]
+}
