@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Notes
 This version doesn't change the functionality much, I've just learned a bunch more about php and most of my code is absolutely terrible so I'm doing a complete re-wright.
 
+### Added
+ - config compiler
+
+### Changed
+ - config is now compiled into /config/config.php whenever a change is made rather than compiling every time a page is loaded
+
 ## [v0.1.0-1] - 17-30-10
 ### Notes
 Basically all of these things were in v0.0.X-alpha but none of them work so I'm putting them all in v0.1.0 and actually making it work.
