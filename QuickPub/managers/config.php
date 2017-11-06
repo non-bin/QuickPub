@@ -1,11 +1,5 @@
 <?php
 
-$config = compileConfig(); // compile the config files
-
-dump($config); // then dump the contents
-
-return $config; // and return it
-
 function compileConfig() // compile the config files
 {
 	if (!$config = readConfigFile('../config/main.json')) // read the contents of the main config file. if it fails
@@ -32,7 +26,30 @@ function compileConfig() // compile the config files
 		}
 	}
 
+	saveConfig($config); // save the compiled config
+
 	return $config; // if all gos well, return the config
+}
+
+function saveConfig($configArray) // save a config array to config/config.php
+{
+	$compiledConfig = "<?php\n\nconst CONFIG = " . var_export($configArray, true) . ";\n\n?>"; // compile by using the var_export function
+
+	$compiledConfigFilePath = realpath('../config/') . '/config.php';
+
+	if (!$compiledConfigFile = fopen($compiledConfigFilePath, "w")) // open the config file, if that fails
+	{
+		addLogEntry("unable to open compiled config file", "error", "0007~1"); // tell the user but don't print the location
+		return false;                                                          // then ret0
+	}
+
+	if (!fwrite($compiledConfigFile, $compiledConfig))
+	{
+		addLogEntry("unable to wright compiled config file", "error", "0007~1"); // tell the user but don't print the location
+		return false;                                                            // then ret0
+	}
+
+	return true; // if all gos well, return the config as an array
 }
 
 function readConfigFile($relativePath) // read and decode the contents of a config file
