@@ -7,7 +7,7 @@ function validate($variable, $type) // fallback is returned if the value that wo
 {
 	if ($type == 'placeholder')
 	{
-		$return = true
+		$return = true;
 	}
 
 	return $return;
@@ -15,7 +15,7 @@ function validate($variable, $type) // fallback is returned if the value that wo
 
 function clean($variable, $type, $fallback) // fallback is returned if the value that would be returned is empty
 {
-	$return = $variable
+	$return = $variable;
 
 	return $return;
 }

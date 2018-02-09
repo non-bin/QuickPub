@@ -1,5 +1,5 @@
 <?php
 
-header('Location: ./www' true, 302);
+header('Location: ./www', true, 302);
 
 ?>
