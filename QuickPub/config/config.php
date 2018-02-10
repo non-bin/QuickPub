@@ -1,6 +1,6 @@
 <?php
 
-const CONFIG = array (
+return array (
   'main' => 
   array (
     'title' => 'QuickPub',

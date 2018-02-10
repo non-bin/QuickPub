@@ -1,8 +1,11 @@
 <?php
 
-require '../config/config.php';
+require '../managers/config.php';
+
+$mainConf = new mainConfig();
 
 require '../managers/log.php';
-require '../managers/config.php';
+
+dump
 
 ?>
